@@ -1,0 +1,466 @@
+/* Aplicar fuente Arial, sans-serif a todo el componente */
+:host {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+    margin-bottom: 25px;
+}
+
+h3 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+.cv-pdf {
+    background-color: #333;
+    color: white;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cv-pdf-header {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.cv-pdf-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.cv-pdf-title {
+    padding-top: 20px;
+}
+
+.cv-pdf-title h1 {
+    font-size: 48px;
+    margin: 0;
+    line-height: 1;
+}
+
+.cv-pdf-title h2 {
+    color: #e74c3c;
+    margin: 10px 0;
+    font-size: 24px;
+}
+
+.cv-pdf-section {
+    margin-bottom: 30px;
+}
+
+.cv-pdf-section h3 {
+    color: white;
+    border-bottom: 2px solid #e74c3c;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.experience-item {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 20px;
+}
+
+.experience-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #e74c3c;
+    background: #333;
+}
+
+.experience-date {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.contact-info {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.contact-info li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.skill-bar {
+    width: 100%;
+    background: #444;
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.skill-level {
+    height: 100%;
+    background: #e74c3c;
+    border-radius: 4px;
+}
+
+.language-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.language-check {
+    color: #e74c3c;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="month"],
+textarea,
+select {
+    width: 97.2%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+select[multiple] {
+    height: 100px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+.print-button {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.print-button:hover {
+    background-color: #27ae60;
+}
+
+.send-button {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.send-button:hover {
+    background-color: #c0392b;
+}
+
+.image-upload-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image-preview {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid #3498db;
+    margin: 10px auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.skill-rating {
+    cursor: pointer;
+    margin-left: 10px;
+    margin-bottom: 18px;
+}
+
+.skill-point {
+    font-size: 40px;
+    color: #2c3e50;
+    margin-right: 2px;
+    transition: color 0.3s ease;
+}
+
+.skill-point-selected {
+    color: #3498db;
+}
+
+.dynamic-field-container {
+    margin-bottom: 10px;
+}
+
+input[type="range"] {
+    width: 180px;
+    height: 8px;
+    background: linear-gradient(to right, #3498db 0%, #3498db var(--value), #ddd var(--value), #ddd 100%);
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    margin-left: 50px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    margin-top: -5px;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3498db;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background 0.3s ease;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 8px;
+    background: transparent;
+    border-radius: 5px;
+}
+
+input[type="range"]::-moz-range-track {
+    height: 8px;
+    background: transparent;
+    border-radius: 5px;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+    background: #2980b9;
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+    background: #2980b9;
+}
+
+.image-upload-button {
+    background: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.cv-preview {
+    display: none;
+    margin-top: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.success-message {
+    display: none;
+    background-color: #2ecc71;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.dynamic-field-container {
+    border: 1px solid #eee;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.add-field-button {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.delete-field-button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 16px;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.delete-field-button:hover {
+  background-color: #c0392b;
+}
+
+.dynamic-field {
+    margin-bottom: 18px;
+}
+
+.dynamic-field input[type="text"],
+.dynamic-field textarea {
+    width: calc(100% - 40px);
+}
+
+.date-range {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.date-range input {
+    flex: 1;
+}
+
+/* Nuevos estilos para checkboxes */
+input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #3498db;
+  border-radius: 3px;
+  margin-right: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  bottom: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Estilos para el modal de idiomas */
+#languageModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Estilos para los idiomas seleccionados */
+#selectedLanguages {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+/* Transiciones */
+#languageModal {
+  transition: opacity 0.3s ease;
+}

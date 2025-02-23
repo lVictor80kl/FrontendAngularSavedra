@@ -1,0 +1,99 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+  }
+  
+  .header {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+  }
+  
+  .header-title {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .header-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .header-mono {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .btn-primary {
+    background-color: #2575fc;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #6a11cb;
+  }
+  
+  /* Navbar */
+  .navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-brand img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #2575fc;
+  }
+  
+  /* About Section */
+  .about-section {
+    padding: 50px 0;
+  }
+  
+  .about-card {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-card h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .about-card .line {
+    width: 50px;
+    height: 2px;
+    background-color: #2575fc;
+    margin-bottom: 20px;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .footer a {
+    color: #2575fc;
+  }
+  
+  .footer a:hover {
+    color: #6a11cb;
+  }

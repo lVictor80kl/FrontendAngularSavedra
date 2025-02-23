@@ -1,0 +1,157 @@
+
+<div class="container">
+<form id="curriculumForm" (ngSubmit)="onSubmit($event)">
+
+        <div class="form-section">
+            <h3>Foto de Perfil</h3>
+            <div class="image-upload-container">
+                <div class="image-preview" id="imagePreview">
+                    <img id="preview" src="" alt="Vista previa de la imagen" style="display: none;">
+                </div>
+                <label class="image-upload-button">
+                    Subir Foto
+<input type="file" id="imageInput" accept="image/png, image/jpeg" style="display: none;" (change)="previewImage($event)">
+                </label>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Datos Personales</h3>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+            
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" required>
+            
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" required>
+            
+            <label for="descripcion">Descripción de Mi Perfil:</label>
+            <textarea id="descripcion" rows="4" required></textarea>
+            
+            <label for="profesion">Profesión:</label>
+            <input type="text" id="profesion" required>
+            
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" required>
+
+            
+            <label for="correo">Correo Electrónico:</label>
+            <input type="email" id="correo" required>
+            
+            <label for="sitioWeb">Sitio Web (opcional):</label>
+            <input type="url" id="sitioWeb">
+            
+            <label for="ubicacion">Ubicación:</label>
+            <input type="text" id="ubicacion" required disabled>
+            <button type="button" class="add-field-button" id="showMapButton">Elegir ubicación</button>
+
+            <div id="mapContainer" style="display: none;">
+                <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-control-geocoder@2/dist/Control.Geocoder.min.css">
+                <div id="mew" style="height: 500px; width: 70%;"></div>
+                <div id="location-info">Ciudad: - <br>Estado: - <br>País: - <br>Latitud: - <br>Longitud: -</div>
+                <textarea id="full-location" rows="4" cols="50" placeholder="Ubicación seleccionada:" readonly></textarea>
+                <button id="save-location" class="add-field-button" type="button">Guardar ubicación</button>
+                <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/leaflet-control-geocoder@2/dist/Control.Geocoder.min.js"></script>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Experiencia Laboral</h3>
+            <div id="experienciaContainer">
+                <div *ngFor="let field of experienciaFields" class="dynamic-field-container">
+                    <input type="text" placeholder="Título del puesto" class="dynamic-field" required>
+                    <input type="text" placeholder="Empresa" class="dynamic-field" required>
+                    <div class="date-range">
+                        <input type="month" placeholder="Fecha inicio" class="dynamic-field" required>
+                        <input type="month" placeholder="Fecha fin" class="dynamic-field" required>
+                    </div>
+                    <textarea placeholder="Descripción de responsabilidades" class="dynamic-field" required></textarea>
+                    <button type="button" class="delete-field-button" (click)="deleteField(field.id, 'experiencia')">×</button>
+                </div>
+            </div>
+            <button type="button" class="add-field-button" (click)="addField('experiencia')">+ Agregar Experiencia</button>
+        </div>
+
+        <div class="form-section">
+            <h3>Formación Académica</h3>
+            <div id="formacionContainer">
+                <div *ngFor="let field of formacionFields" class="dynamic-field-container">
+                    <input type="text" placeholder="Título/Grado" class="dynamic-field" required>
+                    <input type="text" placeholder="Institución" class="dynamic-field" required>
+                    <div class="date-range">
+                        <input type="month" placeholder="Fecha inicio" class="dynamic-field" required>
+                        <input type="month" placeholder="Fecha fin" class="dynamic-field" required>
+                    </div>
+                    <button type="button" class="delete-field-button" (click)="deleteField(field.id, 'formacion')">×</button>
+                </div>
+            </div>
+            <button type="button" class="add-field-button" (click)="addField('formacion')">+ Agregar Formación</button>
+        </div>
+
+        <h3>Idiomas</h3>
+        <button type="button" class="add-field-button" (click)="toggleLanguageSelection()">+ Elegir Idiomas</button>
+        
+        <div id="idiomasContainer" *ngIf="showLanguageSelection">
+            <label><input type="checkbox" value="Español" [checked]="selectedLanguages.includes('Español')"> Español</label><br>
+            <label><input type="checkbox" value="Portugués" [checked]="selectedLanguages.includes('Portugués')"> Portugués</label><br>
+            <label><input type="checkbox" value="Inglés" [checked]="selectedLanguages.includes('Inglés')"> Inglés</label><br>
+            <label><input type="checkbox" value="Francés" [checked]="selectedLanguages.includes('Francés')"> Francés</label><br>
+            <label><input type="checkbox" value="Alemán" [checked]="selectedLanguages.includes('Alemán')"> Alemán</label><br>
+            <label><input type="checkbox" value="Italiano" [checked]="selectedLanguages.includes('Italiano')"> Italiano</label><br>
+            <label><input type="checkbox" value="Chino" [checked]="selectedLanguages.includes('Chino')"> Chino</label><br>
+            <label><input type="checkbox" value="Japonés" [checked]="selectedLanguages.includes('Japonés')"> Japonés</label><br>
+            <button type="button" class="add-field-button" (click)="saveSelectedLanguages()">Guardar</button>
+        </div>
+
+        <div id="selectedLanguages" style="margin-top: 10px;">
+          <div *ngFor="let lang of selectedLanguages">
+            <label>
+              <input type="checkbox" [checked]="true" (change)="removeLanguage(lang)">
+              {{ lang }}
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Competencias</h3>
+            <div id="competenciasContainer">
+                <div *ngFor="let field of competenciasFields; let index = index" class="dynamic-field-container" style="display: flex; align-items: center;">
+                    <input type="text" placeholder="Competencia" class="dynamic-field" required style="width: 25em; margin-right: 10px;">
+                    <input type="range" min="0" max="10" [value]="competenciasFields[index]?.level || 0" class="dynamic-field" style="margin-right: 10px;" step="1" id="nivelCompetencia" (input)="updateCompetenciaLevel(index, $any($event.target).value)">
+                    <button type="button" class="delete-field-button" (click)="deleteField(field.id, 'competencias')">×</button>
+                </div>
+            </div>
+            <button type="button" class="add-field-button" (click)="addField('competencias')">+ Agregar Competencia</button>
+        </div>
+
+        <div class="form-section">
+            <h3>Habilidades</h3>
+            <div id="habilidadesContainer">
+                <div *ngFor="let field of habilidadesFields" class="dynamic-field-container" style="display: flex; align-items: center;">
+                    <input type="text" placeholder="Habilidad" class="dynamic-field" required style="width:25em; margin-right: 10px;">
+                    <div class="skill-rating">
+                        <span *ngFor="let i of [1,2,3,4,5]" class="skill-point" (click)="setSkillLevel(field.id, i)">●</span>
+                    </div>
+                    <button type="button" class="delete-field-button" (click)="deleteField(field.id, 'habilidades')">×</button>
+                </div>
+            </div>
+            <button type="button" class="add-field-button" (click)="addField('habilidades')">+ Agregar Habilidad</button>
+        </div>
+        
+        <div class="button-container">
+            <button type="submit">Generar Curriculum</button>
+            <button type="button" class="print-button" (click)="printCV()">Imprimir</button>
+        </div>
+    </form>
+
+    <div id="successMessage" class="success-message">
+        ¡El curriculum ha sido enviado correctamente!
+    </div>
+
+    <div id="cvPreview" class="cv-preview">
+        <!-- El contenido del CV se generará dinámicamente -->
+    </div>
+</div>
