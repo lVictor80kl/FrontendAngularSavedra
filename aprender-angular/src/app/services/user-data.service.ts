@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import Login from '../models/login';
+import {CV} from '../models/CV';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserDataService {
+  private apiUrl = 'http://localhost:3000';
 
-  private apiUrl = 'https://api.ejemplo.com/data';
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getData(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  // Método para realizar el login
+  login(data: Login): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, data);
   }
 
-  postData(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  postForm(data:CV): Observable<any>{
+    return this.http.post(`${this.apiUrl}/forms/createform`, data);
   }
 }

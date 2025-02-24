@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { UserDataService } from '../../services/user-data.service';
 import * as L from 'leaflet';
 import 'leaflet-control-geocoder';
+import {CV} from '../../models/CV'
 
 declare module 'leaflet' {
   namespace Control {
@@ -30,6 +31,8 @@ declare module 'leaflet' {
 })
 
 export class FormularioComponent implements OnInit {
+
+  
   imageBase64: string = '';
   nextSkillId: number = 1;
   showLanguageSelection = false;
@@ -40,9 +43,72 @@ export class FormularioComponent implements OnInit {
   }
 
   // Métodos para manejar eventos del formulario
-  onSubmit(event: Event): void {
-    event.preventDefault();
-    // Lógica para validar y procesar el formulario
+  onSubmit() {
+    const cv: CV = this.buildCV();
+    console.log(cv)
+    this.userService.postForm(cv).subscribe({
+      next: (response) => {
+        console.log("FINO")
+      },
+      error: (error) => {
+       console.error(error)
+      },
+    })
+  }
+
+  buildCV(): CV {
+    const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
+    const apellido = (document.getElementById('apellido') as HTMLInputElement).value;
+    const cedula = (document.getElementById('cedula') as HTMLInputElement).value;
+    const profesion = (document.getElementById('profesion') as HTMLInputElement).value;
+    const telefono = (document.getElementById('telefono') as HTMLInputElement).value;
+    const correo = (document.getElementById('correo') as HTMLInputElement).value;
+    const sitioWeb = (document.getElementById('sitioWeb') as HTMLInputElement).value;
+    const ubicacion = (document.getElementById('ubicacion') as HTMLInputElement).value;
+    const descripcion = (document.getElementById('descripcion') as HTMLTextAreaElement).value;
+
+    const laboralExperiences = Array.from(document.querySelectorAll('#experienciaContainer .dynamic-field-container')).map(exp => ({
+      titulo: (exp.querySelector('input[placeholder="Título del puesto"]') as HTMLInputElement).value,
+      empresa: (exp.querySelector('input[placeholder="Empresa"]') as HTMLInputElement).value,
+      fechaInicio: (exp.querySelector('input[type="month"]:first-of-type') as HTMLInputElement).value,
+      fechaFin: (exp.querySelector('input[type="month"]:last-of-type') as HTMLInputElement).value,
+      descripcion: (exp.querySelector('textarea') as HTMLTextAreaElement).value,
+    }));
+
+    const academyFormations = Array.from(document.querySelectorAll('#formacionContainer .dynamic-field-container')).map(form => ({
+      titulo: (form.querySelector('input[placeholder="Título/Grado"]') as HTMLInputElement).value,
+      institucion: (form.querySelector('input[placeholder="Institución"]') as HTMLInputElement).value,
+      fechaInicio: (form.querySelector('input[type="month"]:first-of-type') as HTMLInputElement).value,
+      fechaFin: (form.querySelector('input[type="month"]:last-of-type') as HTMLInputElement).value,
+    }));
+
+    const competencias = Array.from(document.querySelectorAll('#competenciasContainer .dynamic-field-container')).map(comp => ({
+      nombre: (comp.querySelector('input[placeholder="Competencia"]') as HTMLInputElement).value,
+      nivel: (comp.querySelector('input[type="range"]') as HTMLInputElement).value,
+    }));
+
+    const habilidades = Array.from(document.querySelectorAll('#habilidadesContainer .dynamic-field-container')).map(habil => ({
+      nombre: (habil.querySelector('input[placeholder="Habilidad"]') as HTMLInputElement).value,
+      nivel: Array.from(habil.querySelectorAll('.skill-point-selected')).length,
+    }));
+
+    return {
+      id: Date.now(),
+      name: nombre,
+      lastname: apellido,
+      CI: cedula,
+      phone: telefono,
+      email: correo,
+      country: '', 
+      city: '', 
+      state: '',
+      laboralExperiences,
+      languages: this.selectedLanguages,
+      academyFormations,
+      skills: competencias,
+      softSkills: habilidades,
+      userId: 1,
+    };
   }
 
   previewImage(event: Event): void {
@@ -531,7 +597,7 @@ export class FormularioComponent implements OnInit {
     }
   }
 
-  constructor() {
+  constructor(private userService: UserDataService) {
     // Inicializar el manejador de eventos para el botón de ubicación
     setTimeout(() => {
       const showMapButton = document.getElementById('showMapButton');

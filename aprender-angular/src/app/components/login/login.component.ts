@@ -1,20 +1,42 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserDataService } from '../../services/user-data.service';
+import Login from '../../models/login'; // Importamos la interfaz Login
+import { NgIf } from '@angular/common'; // Importamos NgIf
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, NgIf], // Importamos FormsModule directamente aquí
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  standalone: true
 })
 export class LoginComponent {
+  // Usamos la interfaz Login para definir el tipo de loginData
+  loginData: Login = { email: '', password: '' };
 
-  constructor(private router:Router){}
+  // Variable para controlar si hay un error en el login
+  loginError: boolean = false;
 
-  onSubmit(){
-    this.router.navigate(['/form'])
+  constructor(private router: Router, private userService: UserDataService) {}
+
+  // Función que se ejecuta al enviar el formulario
+  onSubmit() {
+    // Reiniciamos el estado de error
+    this.loginError = false;
+
+    // Llamamos al servicio de login y pasamos los datos del formulario
+    this.userService.login(this.loginData).subscribe({
+      next: (response) => {
+        // Si el login es exitoso, redirigimos al usuario a la ruta '/form'
+        this.router.navigate(['/form']);
+      },
+      error: (error) => {
+        // Si hay un error, activamos la bandera de error
+        this.loginError = true;
+        console.error('Error en el login:', error);
+      },
+    });
   }
-
 }
