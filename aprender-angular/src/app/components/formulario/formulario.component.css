@@ -21,7 +21,7 @@
 
 h3 {
     color: #2c3e50;
-    border-bottom: 2px solid #3498db;
+    border-bottom: 2px solid #f86779;
     padding-bottom: 10px;
 }
 
@@ -188,12 +188,12 @@ button {
 }
 
 button[type="submit"] {
-    background-color: #3498db;
+    background-color: #f86779;
     color: white;
 }
 
 button[type="submit"]:hover {
-    background-color: #2980b9;
+    background-color: #e71931;
 }
 
 .print-button {
@@ -223,7 +223,7 @@ button[type="submit"]:hover {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    border: 3px solid #3498db;
+    border: 3px solid #f86779;
     margin: 10px auto;
     overflow: hidden;
     display: flex;
@@ -252,7 +252,7 @@ button[type="submit"]:hover {
 }
 
 .skill-point-selected {
-    color: #3498db;
+    color: #f86779;
 }
 
 .dynamic-field-container {
@@ -262,7 +262,7 @@ button[type="submit"]:hover {
 input[type="range"] {
     width: 180px;
     height: 8px;
-    background: linear-gradient(to right, #3498db 0%, #3498db var(--value), #ddd var(--value), #ddd 100%);
+    background: linear-gradient(to right, #f86779 0%, #f86779 var(--value), #ddd var(--value), #ddd 100%);
     border-radius: 5px;
     outline: none;
     -webkit-appearance: none;
@@ -277,7 +277,7 @@ input[type="range"]::-webkit-slider-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #3498db;
+    background: #f86779;
     cursor: pointer;
     border: 2px solid white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -297,15 +297,15 @@ input[type="range"]::-moz-range-track {
 }
 
 input[type="range"]:hover::-webkit-slider-thumb {
-    background: #2980b9;
+    background: #c0392b;
 }
 
 input[type="range"]:hover::-moz-range-thumb {
-    background: #2980b9;
+    background: #c0392b;
 }
 
 .image-upload-button {
-    background: #3498db;
+    background: #f86779;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -342,7 +342,7 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 .add-field-button {
-    background-color: #3498db;
+    background-color: #f86779;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -399,7 +399,7 @@ input[type="checkbox"] {
   appearance: none;
   width: 16px;
   height: 16px;
-  border: 2px solid #3498db;
+  border: 2px solid #f86779;
   border-radius: 3px;
   margin-right: 8px;
   position: relative;
@@ -407,8 +407,8 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-  background-color: #3498db;
-  border-color: #3498db;
+  background-color: #f86779;
+  border-color: #f86779;
 }
 
 input[type="checkbox"]:checked::after {
