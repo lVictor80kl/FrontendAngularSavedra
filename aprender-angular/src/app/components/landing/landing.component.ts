@@ -17,12 +17,6 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
     console.log('OnInit');
     this.loadStylesFromLocalStorage();
-    this.themeService.theme$.subscribe(theme => {
-      if (theme) {
-        this.applyTheme(theme);
-        this.saveThemeToLocalStorage(theme);
-      }else console.log('No hay tema');
-    });
   }
 
   applyTheme(theme: any) {
@@ -56,11 +50,14 @@ export class LandingComponent implements OnInit {
     const accentColor = localStorage.getItem('accentColor');
     const additionalColor1 = localStorage.getItem('additionalColor1');
     const additionalColor2 = localStorage.getItem('additionalColor2');
-    const sizeTitle = localStorage.getItem('sizeTitle');
-    const sizeSubtitle = localStorage.getItem('sizeSubtitle');
-    const sizeText = localStorage.getItem('sizeText');
+    const sizeTitle = `${localStorage.getItem('sizeTitle')}px`;
+    const sizeSubtitle = `${localStorage.getItem('sizeSubtitle')}px`;
+    const sizeText = `${localStorage.getItem('sizeText')}px`;
     const mainFont = localStorage.getItem('mainFont');
     const secondaryFont = localStorage.getItem('secondaryFont');
+
+    console.log(sizeTitle, sizeSubtitle, sizeText);
+    console.log(mainFont, secondaryFont);
 
     if (primaryColor && secondaryColor && accentColor && additionalColor1 && additionalColor2) {
       document.documentElement.style.setProperty('--primary', primaryColor);
