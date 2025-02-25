@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { setToken } from '../store/auth.actions';
 import { selectToken } from '../store/auth.reducer';
+import { Pallette } from '../models/Color';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,21 @@ export class UserDataService {
     });
 
     return this.http.post(`${this.apiUrl}/forms/createform`, data, {headers});
+  }
+
+  createPallette(data:any): Observable<any>{
+    return this.http.post(`${this.apiUrl}/pallettes/create`, data,)
+  }
+
+  getPallettes(id:any): Observable<any>{
+    return this.http.get(`${this.apiUrl}/pallettes/get/${id}`)
+  }
+
+  deletePallette(id:any): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/pallettes/delete/${id}`)
+  }
+
+  updatePallette(data:any, id:any): Observable<any>{
+    return this.http.patch(`${this.apiUrl}/pallettes/update/${id}`, data)
   }
 }

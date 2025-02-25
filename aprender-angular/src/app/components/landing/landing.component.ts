@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ThemeService } from '../../services/theme-service.service';
 
 @Component({
   selector: 'app-landing',
@@ -10,10 +11,28 @@ import { RouterLink } from '@angular/router';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private themeService:ThemeService) { }
 
   ngOnInit(): void {
     this.applyStyles();
+    this.themeService.theme$.subscribe(theme => {
+      if (theme) {
+        this.applyTheme(theme);
+      }
+    });
+  }
+  applyTheme(theme: any) {
+    // Aplicar los estilos globales
+    document.documentElement.style.setProperty('--red', theme.primaryColor);
+    document.documentElement.style.setProperty('--white', theme.secondaryColor);
+    document.documentElement.style.setProperty('--gray', theme.accentColor);
+    // document.documentElement.style.setProperty('--additional-color-1', theme.additionalColor1);
+    // document.documentElement.style.setProperty('--additional-color-2', theme.additionalColor2);
+    // document.documentElement.style.setProperty('--title-font-size', `${theme.sizeTitle}px`);
+    // document.documentElement.style.setProperty('--subtitle-font-size', `${theme.sizeSubtitle}px`);
+    // document.documentElement.style.setProperty('--text-font-size', `${theme.sizeText}px`);
+    // document.documentElement.style.setProperty('--main-font', theme.mainFont);
+    // document.documentElement.style.setProperty('--secondary-font', theme.secondaryFont);
   }
 
   applyStyles(): void {
