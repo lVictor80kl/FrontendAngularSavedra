@@ -2,10 +2,7 @@
   <div class="login-card">
     <h2 class="login-title">Iniciar Sesión</h2>
 
-    <!-- Mensaje de error si los datos son incorrectos -->
-    <div *ngIf="loginError" class="alert alert-danger">
-      Los datos ingresados son incorrectos. Por favor, inténtalo de nuevo.
-    </div>
+   
 
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -36,5 +33,12 @@
         Iniciar Sesión
       </button>
     </form>
+    <div *ngIf="loginSuccess" class="success-message">
+      ¡Inicio de sesión exitoso! Redirigiendo...
+    </div>
+     <!-- Mensaje de error si los datos son incorrectos -->
+     <div *ngIf="loginError" class="alert alert-danger">
+      Los datos ingresados son incorrectos. Por favor, inténtalo de nuevo.
+    </div>
   </div>
 </div>
