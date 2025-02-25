@@ -1,43 +1,52 @@
-<div class="login-container">
-  <div class="login-card">
-    <h2 class="login-title">Iniciar Sesión</h2>
-
-   
+<div class="login-container" style="background-color: var(--secondary); color: var(--primary);">
+  <div class="login-card" style="background-color: var(--accent); padding: 2rem; border-radius: 8px;">
+    <h2 class="login-title m-font" style="color: var(--primary); font-size: var(--title-font-size); text-align: center;">
+      Iniciar Sesión
+    </h2>
 
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="email">Correo electrónico</label>
+        <label for="email" class="s-font" style="color: var(--primary); font-size: var(--text-font-size);">Correo electrónico</label>
         <input
           type="email"
           id="email"
-          class="form-control"
+          class="form-control s-font"
           placeholder="Ingrese su correo electrónico"
           [(ngModel)]="loginData.email"
           name="email"
           required
+          style="background-color: var(--white); color: var(--primary); font-size: var(--text-font-size);"
         />
       </div>
       <div class="form-group">
-        <label for="password">Contraseña</label>
+        <label for="password" class="s-font" style="color: var(--primary); font-size: var(--text-font-size);">Contraseña</label>
         <input
           type="password"
           id="password"
-          class="form-control"
+          class="form-control s-font"
           placeholder="Ingrese su contraseña"
           [(ngModel)]="loginData.password"
           name="password"
           required
+          style="background-color: var(--white); color: var(--primary); font-size: var(--text-font-size);"
         />
       </div>
-      <button type="submit" class="btn btn-primary btn-rounded w-lg ti-printer pr-2">
+      <button
+        type="submit"
+        class="btn btn-primary btn-rounded w-lg ti-printer pr-2 s-font"
+        style="background-color: var(--primary); color: var(--accent); font-size: var(--text-font-size);"
+      >
         Iniciar Sesión
       </button>
     </form>
-    <div *ngIf="loginSuccess" class="success-message">
+
+    <!-- Mensaje de éxito si el inicio de sesión es exitoso -->
+    <div *ngIf="loginSuccess" class="success-message s-font" style="color: var(--primary); font-size: var(--text-font-size); margin-top: 1rem; text-align: center;">
       ¡Inicio de sesión exitoso! Redirigiendo...
     </div>
-     <!-- Mensaje de error si los datos son incorrectos -->
-     <div *ngIf="loginError" class="alert alert-danger">
+
+    <!-- Mensaje de error si los datos son incorrectos -->
+    <div *ngIf="loginError" class="alert alert-danger s-font" style="color: var(--text-danger); font-size: var(--text-font-size); margin-top: 1rem; text-align: center;">
       Los datos ingresados son incorrectos. Por favor, inténtalo de nuevo.
     </div>
   </div>

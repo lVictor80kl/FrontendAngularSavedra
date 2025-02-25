@@ -9,6 +9,7 @@ import {jwtDecode} from 'jwt-decode';
 import { ThemeService } from '../../services/theme-service.service';
 import { RouterLink } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class PersonalizacionFormComponent implements OnInit {
   mainFont: File | null = null;
   secondaryFont: File | null = null;
 
-  constructor(private userService: UserDataService, private themeService:ThemeService){}
+  constructor(private userService: UserDataService, private themeService:ThemeService, private change:ChangeDetectorRef){}
 
   
 
@@ -82,6 +83,8 @@ export class PersonalizacionFormComponent implements OnInit {
     if (palette.typo2File) {
     localStorage.setItem('secondaryFontUrl', palette.typo2File.toString());
     }
+    this.change.detectChanges();
+    this.updateSidebarStyles();
   }
 
   createPalletteObject(): Pallette {
@@ -166,6 +169,16 @@ export class PersonalizacionFormComponent implements OnInit {
     }
   }
 
+  updateSidebarStyles() {
+    const sidebar = document.querySelector('.sidebar') as HTMLElement;
+    if (sidebar) {
+      sidebar.style.setProperty('--primary', this.primaryColor);
+      sidebar.style.setProperty('--secondary', this.secondaryColor);
+      sidebar.style.setProperty('--accent', this.accentColor);
+      sidebar.style.setProperty('--additional-color-1', this.additionalColor1);
+      sidebar.style.setProperty('--additional-color-2', this.additionalColor2);
+    }
+  }
   onSecondaryFontChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {

@@ -10,40 +10,42 @@ import { Store } from '@ngrx/store';
   standalone: true,
   imports: [RouterModule, CommonModule],
   template: `
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <h2> <span style="font-family: Arial, Sans-Serif;">Menu</span></h2>
-      </div>
-      <div class="sidebar-content">
-        <ul class="sidebar-menu">
-        <li>
-            <a routerLink="/landing" routerLinkActive="active" >
-              <span style="font-family: Arial, Sans-Serif;">Home</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="/styles" routerLinkActive="active" >
-              <span style="font-family: Arial, Sans-Serif;">Personalización</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="/form" routerLinkActive="active">
-              <span style="font-family: Arial, Sans-Serif;">Formulario</span>
-            </a>
-          </li>
-           <li>
-            <a routerLink="/multimedia" routerLinkActive="active">
-              <span style="font-family: Arial, Sans-Serif;">Multimedia</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="sidebar-footer">
-        <button class="logout-button" (click)="logout()">
-          Cerrar Sesión
-        </button>
-      </div>
-    </aside>
+    <aside class="sidebar" style="background-color: var(--secondary); color: var(--primary);">
+  <div class="sidebar-header">
+    <h2 class="m-font" style="color: var(--primary); font-size: var(--title-font-size); text-align: center;">
+      <span>Menu</span>
+    </h2>
+  </div>
+  <div class="sidebar-content">
+    <ul class="sidebar-menu">
+      <li>
+        <a routerLink="/landing" routerLinkActive="active" class="s-font" style="color: var(--primary); font-size: var(--text-font-size);">
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/styles" routerLinkActive="active" class="s-font" style="color: var(--primary); font-size: var(--text-font-size);">
+          <span>Personalización</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/form" routerLinkActive="active" class="s-font" style="color: var(--primary); font-size: var(--text-font-size);">
+          <span>Formulario</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/multimedia" routerLinkActive="active" class="s-font" style="color: var(--primary); font-size: var(--text-font-size);">
+          <span>Multimedia</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="sidebar-footer">
+    <button class="logout-button s-font" (click)="logout()" style="background-color: var(--primary); color: var(--accent); font-size: var(--text-font-size); padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">
+      Cerrar Sesión
+    </button>
+  </div>
+</aside>
   `,
   styles: [`
     .sidebar {
