@@ -1,5 +1,6 @@
 <div class="container">
     <form id="curriculumForm" (ngSubmit)="onSubmit()">
+  <form id="curriculumForm">
       <div class="form-section">
         <h3>Foto de Perfil</h3>
         <div class="image-upload-container">
@@ -16,28 +17,28 @@
       <div class="form-section">
         <h3>Datos Personales</h3>
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required>
+        <input type="text" id="nombre" name="nombre" placeholder="John" required>
   
         <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" name="apellido" required>
+        <input type="text" id="apellido" name="apellido" placeholder="Doe" required>
   
         <label for="cedula">Cédula:</label>
-        <input type="text" id="cedula" name="cedula" required>
+        <input type="text" id="cedula" name="cedula" placeholder="11.550.272" required>
   
         <label for="descripcion">Descripción de Mi Perfil:</label>
-        <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+        <textarea id="descripcion" name="descripcion" rows="4" placeholder="Ingrese descripcion"required></textarea>
   
         <label for="profesion">Profesión:</label>
-        <input type="text" id="profesion" name="profesion" required>
+        <input type="text" id="profesion" name="profesion" placeholder="Programador" required>
   
         <label for="telefono">Teléfono:</label>
-        <input type="tel" id="telefono" name="telefono" required>
+        <input type="tel" id="telefono" name="telefono" placeholder="0424-4829354" required>
   
         <label for="correo">Correo Electrónico:</label>
-        <input type="email" id="correo" name="correo" required>
+        <input type="email" id="correo" name="correo" placeholder="johndoe@gmail.com"required>
   
         <label for="sitioWeb">Sitio Web (opcional):</label>
-        <input type="url" id="sitioWeb" name="sitioWeb">
+        <input type="url" id="sitioWeb" name="sitioWeb" placeholder="web@gmail.com">
   
         <label for="ubicacion">Ubicación:</label>
         <input type="text" id="ubicacion" name="ubicacion" required disabled>
@@ -139,11 +140,10 @@
       </div>
   
       <div class="button-container">
-        <button type="submit">Generar Curriculum</button>
+        <button type="button" (click)="buildCV()">Generar Curriculum</button>
         <button type="button" class="print-button" (click)="printCV()">Imprimir</button>
       </div>
     </form>
-  
     <div id="successMessage" class="success-message">
       ¡El curriculum ha sido enviado correctamente!
     </div>

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserDataService } from '../../services/user-data.service';
 import * as L from 'leaflet';
 import 'leaflet-control-geocoder';
 import {CV} from '../../models/CV'
+import { Store } from '@ngrx/store';
+import { selectToken } from '../../store/auth.reducer';
+import {jwtDecode} from 'jwt-decode';
 
 declare module 'leaflet' {
   namespace Control {
@@ -31,8 +34,9 @@ declare module 'leaflet' {
 })
 
 export class FormularioComponent implements OnInit {
-
-  
+  user: { id: number} | null = null;
+  private store = inject(Store)
+  token$ = this.store.select(selectToken);
   imageBase64: string = '';
   nextSkillId: number = 1;
   showLanguageSelection = false;
@@ -42,21 +46,9 @@ export class FormularioComponent implements OnInit {
     this.showLanguageSelection = !this.showLanguageSelection;
   }
 
-  // Métodos para manejar eventos del formulario
-  onSubmit() {
-    const cv: CV = this.buildCV();
-    console.log(cv)
-    this.userService.postForm(cv).subscribe({
-      next: (response) => {
-        console.log("FINO")
-      },
-      error: (error) => {
-       console.error(error)
-      },
-    })
-  }
 
-  buildCV(): CV {
+
+  buildCV(): void {
     const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
     const apellido = (document.getElementById('apellido') as HTMLInputElement).value;
     const cedula = (document.getElementById('cedula') as HTMLInputElement).value;
@@ -66,6 +58,9 @@ export class FormularioComponent implements OnInit {
     const sitioWeb = (document.getElementById('sitioWeb') as HTMLInputElement).value;
     const ubicacion = (document.getElementById('ubicacion') as HTMLInputElement).value;
     const descripcion = (document.getElementById('descripcion') as HTMLTextAreaElement).value;
+
+    const ubicacionSplit = ubicacion.split(',')
+
 
     const laboralExperiences = Array.from(document.querySelectorAll('#experienciaContainer .dynamic-field-container')).map(exp => ({
       titulo: (exp.querySelector('input[placeholder="Título del puesto"]') as HTMLInputElement).value,
@@ -92,23 +87,39 @@ export class FormularioComponent implements OnInit {
       nivel: Array.from(habil.querySelectorAll('.skill-point-selected')).length,
     }));
 
-    return {
+    const cv:CV = {
       id: Date.now(),
       name: nombre,
       lastname: apellido,
       CI: cedula,
+      website: sitioWeb,
+      profesion: profesion,
+      profileDescription: descripcion,
       phone: telefono,
       email: correo,
-      country: '', 
-      city: '', 
-      state: '',
+      country: ubicacionSplit[2], 
+      city: ubicacionSplit[0], 
+      state: ubicacionSplit[1],
       laboralExperiences,
       languages: this.selectedLanguages,
       academyFormations,
       skills: competencias,
       softSkills: habilidades,
-      userId: 1,
-    };
+      userId: this.user?.id ?? 0,
+    }
+
+    console.log(cv);
+
+    this.userService.postForm(cv).subscribe({
+      next: (response) => {
+        // Si el login es exitoso, redirigimos al usuario a la ruta '/form'
+        console.log(response)
+      },
+      error: (error) => {
+        // Si hay un error, activamos la bandera de error
+        console.log(error)
+      },
+    });
   }
 
   previewImage(event: Event): void {
@@ -634,6 +645,19 @@ export class FormularioComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
+  
+    this.token$.subscribe((token) => {
+      if (token){
+      const decodedToken = jwtDecode(token) as { id: number;};
+        this.user = decodedToken;
+      console.log('Token en el store:', token, this.user.id);}
+      else{
+        this.user = null;
+    console.log('No hay token en el store');
+      }
+    });
+
     // Initialize location input as empty
     const ubicacionInput = document.getElementById('ubicacion') as HTMLInputElement;
     if (ubicacionInput) {

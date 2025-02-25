@@ -3,6 +3,9 @@ export interface CV {
     name: string;
     lastname: string;
     CI: string; // Cédula de Identidad (única)
+    website: string;
+    profesion: string;
+    profileDescription: string;
     phone: string;
     email: string;
     country: string;
