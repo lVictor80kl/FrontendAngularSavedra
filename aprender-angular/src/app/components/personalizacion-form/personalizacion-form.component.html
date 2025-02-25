@@ -1,0 +1,180 @@
+<app-sidebar></app-sidebar>
+
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Formulario de Personalización</h1>
+  
+    <div class="row">
+      <!-- Formulario -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Configuración</h5>
+  
+            <!-- Inputs de Color -->
+            <div class="mb-3">
+              <label for="palletteName" class="form-label">Nombre de la paleta:</label>
+              <input type="text" class="form-control" id="palletteName" [(ngModel)]="name">
+            </div>
+  
+            <div class="mb-3">
+              <label for="primaryColor" class="form-label">Color Primario:</label>
+              <input type="color" class="form-control form-control-color" id="primaryColor" [(ngModel)]="primaryColor" >
+            </div>
+  
+            <div class="mb-3">
+              <label for="secondaryColor" class="form-label">Color Secundario:</label>
+              <input type="color" class="form-control form-control-color" id="secondaryColor" [(ngModel)]="secondaryColor">
+            </div>
+  
+            <div class="mb-3">
+              <label for="accentColor" class="form-label">Color de Acento:</label>
+              <input type="color" class="form-control form-control-color" id="accentColor" [(ngModel)]="accentColor">
+            </div>
+  
+            <div class="mb-3">
+              <label for="additionalColor1" class="form-label">Color Adicional 1:</label>
+              <input type="color" class="form-control form-control-color" id="additionalColor1" [(ngModel)]="additionalColor1">
+            </div>
+  
+            <div class="mb-3">
+              <label for="additionalColor2" class="form-label">Color Adicional 2:</label>
+              <input type="color" class="form-control form-control-color" id="additionalColor2" [(ngModel)]="additionalColor2">
+            </div>
+  
+            <!-- Inputs de Tamaño de Fuente -->
+            <div class="mb-3">
+              <label for="paragraphFontSize" class="form-label">Tamaño de Fuente de Párrafos:</label>
+              <input type="number" class="form-control" id="paragraphFontSize" [(ngModel)]="sizeText">
+            </div>
+  
+            <div class="mb-3">
+              <label for="titleFontSize" class="form-label">Tamaño de Fuente de Títulos:</label>
+              <input type="number" class="form-control" id="titleFontSize" [(ngModel)]="sizeTitle">
+            </div>
+  
+            <div class="mb-3">
+              <label for="subtitleFontSize" class="form-label">Tamaño de Fuente de Subtítulos:</label>
+              <input type="number" class="form-control" id="subtitleFontSize" [(ngModel)]="sizeSubtitle">
+            </div>
+  
+            <!-- Inputs de Tipografía -->
+            <div class="mb-3">
+              <label for="mainFont" class="form-label">Tipografía Principal:</label>
+              <input type="file" class="form-control" id="mainFont" (change)="onMainFontChange($event)" accept=".ttf, .otf">
+            </div>
+  
+            <div class="mb-3">
+              <label for="secondaryFont" class="form-label">Tipografía Secundaria:</label>
+              <input type="file" class="form-control" id="secondaryFont" (change)="onSecondaryFontChange($event)" accept=".ttf, .otf">
+            </div>
+  
+            <div class="d-flex justify-content-end">
+                <button *ngIf="!isEditing" 
+                        class="btn btn-primary me-2" 
+                        (click)="submitPallette()" >
+                    Guardar
+                </button>
+                
+                <button *ngIf="isEditing" 
+                        class="btn btn-primary me-2" 
+                        (click)="confirmEdit()" >
+                    Confirmar
+                </button>
+                
+                <button *ngIf="isEditing" 
+                        class="btn btn-secondary me-2" 
+                        (click)="cancelEdit()">
+                    Cancelar
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Vista Previa -->
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Vista Previa</h5>
+            <div class="preview-card p-4" [ngStyle]="{
+              'background-color': secondaryColor,
+              'border-color': accentColor,
+              'font-family': mainFont ? 'MainFont' : 'Arial, sans-serif'
+            }">
+              <h1 [ngStyle]="{
+                'color': primaryColor,
+                'font-size.px': sizeTitle
+              }">Título de Ejemplo</h1>
+              <h2 [ngStyle]="{
+                'color': additionalColor1,
+                'font-size.px': sizeSubtitle
+              }">Subtítulo de Ejemplo</h2>
+            </div>
+            <div class="preview-card p-4" [ngStyle]="{
+              'background-color': secondaryColor,
+              'border-color': accentColor,
+              'font-family': secondaryFont ? 'SecondaryFont' : 'Arial, sans-serif'
+            }">
+              <p [ngStyle]="{
+                'color': additionalColor2,
+                'font-size.px': sizeText
+              }">Este es un párrafo de ejemplo que muestra cómo se vería el texto con las configuraciones seleccionadas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Sección de Paletas Creadas -->
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <h2 class="text-center mb-4">Paletas Creadas</h2>
+        <div class="row">
+          <!-- Tarjeta de Paleta -->
+          <div class="col-md-4 mb-4" *ngFor="let pallette of palettes">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ pallette.name }}</h5>
+  
+                <!-- Colores -->
+                <div class="mb-3">
+                  <h6 class="card-subtitle mb-2 text-muted">Colores</h6>
+                  <div class="d-flex flex-wrap">
+                    <div
+                      *ngFor="let color of pallette.colors | keyvalue"
+                      class="m-1 p-2"
+                      [ngStyle]="{ 'background-color': color.value }"
+                    ></div>
+                  </div>
+                </div>
+  
+                <!-- Tamaños de Fuente -->
+                <div class="mb-3">
+                  <h6 class="card-subtitle mb-2 text-muted">Tamaños de Fuente</h6>
+                  <p>Título: {{ pallette.sizes.sizeTitle }}</p>
+                  <p>Subtítulo: {{ pallette.sizes.sizeSubtitle }}</p>
+                  <p>Texto: {{ pallette.sizes.sizeText }}</p>
+                </div>
+  
+                <!-- Tipografías -->
+                <div class="mb-3">
+                  <h6 class="card-subtitle mb-2 text-muted">Tipografías</h6>
+                  <p>Principal: {{ pallette.typo1 }}</p>
+                  <p>Secundaria: {{ pallette.typo2 }}</p>
+                </div>
+  
+                <!-- Botones de Acción -->
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success me-2" (click)="applyPalette(pallette)">Aplicar</button>
+                  <button class="btn btn-primary me-2" (click)="pallette.id !== undefined && editPallette(pallette.id)">Editar</button>
+                  <button class="btn btn-danger" (click)="pallette.id !== undefined && deletePallette(pallette.id)">Borrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

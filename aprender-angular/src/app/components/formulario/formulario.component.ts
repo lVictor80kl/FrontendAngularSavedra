@@ -7,6 +7,9 @@ import {CV} from '../../models/CV'
 import { Store } from '@ngrx/store';
 import { selectToken } from '../../store/auth.reducer';
 import {jwtDecode} from 'jwt-decode';
+import { RouterLink } from '@angular/router';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+
 
 declare module 'leaflet' {
   namespace Control {
@@ -29,7 +32,7 @@ declare module 'leaflet' {
   selector: 'app-formulario',
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, SidebarComponent],
   standalone:true,
 })
 
