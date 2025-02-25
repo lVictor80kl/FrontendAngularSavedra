@@ -8,6 +8,7 @@ import { selectToken } from '../../store/auth.reducer';
 import {jwtDecode} from 'jwt-decode';
 import { ThemeService } from '../../services/theme-service.service';
 import { RouterLink } from '@angular/router';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { RouterLink } from '@angular/router';
   imports: [
     FormsModule, // Agrega FormsModule aquí
     CommonModule,
-    RouterLink // Agrega CommonModule aquí
+    SidebarComponent, // Agrega CommonModule aquí
   ],
 })
 export class PersonalizacionFormComponent implements OnInit {
@@ -46,6 +47,8 @@ export class PersonalizacionFormComponent implements OnInit {
   constructor(private userService: UserDataService, private themeService:ThemeService){}
 
   applyPalette(palette: Pallette) {
+    console.log('Aplicando paleta:', palette);
+  
     this.themeService.applyTheme({
       primaryColor: palette.colors.primary,
       secondaryColor: palette.colors.secondary,
@@ -58,11 +61,22 @@ export class PersonalizacionFormComponent implements OnInit {
       mainFont: palette.typo1,
       secondaryFont: palette.typo2
     });
+  
+    localStorage.setItem('primaryColor', palette.colors.primary);
+    localStorage.setItem('secondaryColor', palette.colors.secondary);
+    localStorage.setItem('accentColor', palette.colors.accent);
+    localStorage.setItem('additionalColor1', palette.colors.additional1);
+    localStorage.setItem('additionalColor2', palette.colors.additional2);
+    localStorage.setItem('sizeTitle', palette.sizes.sizeTitle);
+    localStorage.setItem('sizeSubtitle', palette.sizes.sizeSubtitle);
+    localStorage.setItem('sizeText', palette.sizes.sizeText);
+    localStorage.setItem('mainFont', palette.typo1);
+    localStorage.setItem('secondaryFont', palette.typo2);
   }
 
   createPalletteObject(): Pallette {
     return {
-      name: this.name, // Puedes permitir al usuario ingresar un nombre
+      name: this.name,
       colors: {
         primary: this.primaryColor,
         secondary: this.secondaryColor,

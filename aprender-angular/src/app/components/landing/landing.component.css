@@ -13,28 +13,37 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i&display=swap");
-:root {
+root {
   --blue: #79A9F5;
   --indigo: #C45F90;
   --purple: #A16AE8;
   --pink: #FC8BC0;
-  --red: #F85C70;
+  --red: #F85C70; /* Color primario */
   --orange: #FF8882;
   --yellow: #FAD02C;
   --green: #A3C14A;
   --teal: #20c997;
   --cyan: #47D8E0;
   --white: #fff;
-  --gray: #6c757d;
-  --gray-dark: #343a40;
+  --gray: #6c757d; /* Color secundario */
+  --gray-dark: #343a40; /* Color acento */
+  --additional-color-1: #FFC107; /* Color adicional 1 */
+  --additional-color-2: #17A2B8; /* Color adicional 2 */
+
   --primary: var(--red);
   --secondary: var(--gray);
+  --accent: var(--gray-dark);
   --success: var(--green);
   --info: var(--cyan);
   --warning: var(--orange);
   --danger: var(--red);
   --light: #f8f9fa;
   --dark: var(--gray-dark);
+
+  --title-font-size: 16px;
+  --subtitle-font-size: 24px;
+  --text-font-size: 20px;
+
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -69,7 +78,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: var(--white);
+  background-color: var(--primary);
 }
 
 [tabindex="-1"]:focus {
