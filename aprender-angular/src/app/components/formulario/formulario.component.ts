@@ -32,7 +32,7 @@ declare module 'leaflet' {
   selector: 'app-formulario',
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.css'],
-  imports: [CommonModule, SidebarComponent],
+  imports: [CommonModule, RouterLink, SidebarComponent],
   standalone:true,
 })
 

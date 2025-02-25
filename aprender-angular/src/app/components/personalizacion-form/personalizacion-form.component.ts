@@ -172,11 +172,19 @@ export class PersonalizacionFormComponent implements OnInit {
   updateSidebarStyles() {
     const sidebar = document.querySelector('.sidebar') as HTMLElement;
     if (sidebar) {
-      sidebar.style.setProperty('--primary', this.primaryColor);
-      sidebar.style.setProperty('--secondary', this.secondaryColor);
-      sidebar.style.setProperty('--accent', this.accentColor);
-      sidebar.style.setProperty('--additional-color-1', this.additionalColor1);
-      sidebar.style.setProperty('--additional-color-2', this.additionalColor2);
+      const primaryColor = localStorage.getItem('primaryColor');
+      const secondaryColor = localStorage.getItem('secondaryColor');
+      const accentColor = localStorage.getItem('accentColor');
+      const additionalColor1 = localStorage.getItem('additionalColor1');
+      const additionalColor2 = localStorage.getItem('additionalColor2');
+
+      if (primaryColor && secondaryColor && accentColor && additionalColor1 && additionalColor2) {
+        sidebar.style.setProperty('--primary', primaryColor);
+        sidebar.style.setProperty('--secondary', secondaryColor);
+        sidebar.style.setProperty('--accent', accentColor);
+        sidebar.style.setProperty('--additional-color-1', additionalColor1);
+        sidebar.style.setProperty('--additional-color-2', additionalColor2);
+      }
     }
   }
   onSecondaryFontChange(event: Event) {
