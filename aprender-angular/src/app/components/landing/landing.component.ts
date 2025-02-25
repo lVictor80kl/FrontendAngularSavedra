@@ -12,12 +12,54 @@ import { ThemeService } from '../../services/theme-service.service';
 })
 export class LandingComponent implements OnInit {
 
-  constructor(private themeService: ThemeService) { }
+  constructor(private themeService: ThemeService) { 
+    this.applyFonts();
+  }
 
   ngOnInit(): void {
     console.log('OnInit');
     this.loadStylesFromLocalStorage();
+    
   }
+
+  applyFonts() {
+    const mainFontUrl = localStorage.getItem('mainFontUrl');
+    const secondaryFontUrl = localStorage.getItem('secondaryFontUrl');
+    let main;
+    let secondary;
+
+    if (mainFontUrl && secondaryFontUrl) {
+        main = mainFontUrl.split('\\');
+        secondary = secondaryFontUrl.split('\\');
+        console.log(main, secondary);
+    }
+
+    if (main && secondary) {
+        const mainUrl = `http://localhost:3000/${main[0]}/${main[1]}`;
+        const secondaryUrl = `http://localhost:3000/${secondary[0]}/${secondary[1]}`;
+        const fontFace = new FontFace('CustomFont', `url(${mainUrl})`);
+        const subFontFace = new FontFace('CustomFontSecondary', `url(${secondaryUrl})`);
+
+        console.log(mainUrl, secondaryUrl);
+
+        fontFace.load().then((loadedFont) => {
+            document.fonts.add(loadedFont);
+
+
+            console.log('Font Loaded and Applied');
+        }).catch((error) => {
+            console.error('Error loading font:', error);
+        });
+
+        subFontFace.load().then((loadedFont) => {
+            document.fonts.add(loadedFont);
+
+
+            console.log('Secondary Font Loaded and Applied');
+        })
+    }
+}
+
 
   applyTheme(theme: any) {
     console.log('Aplicando tema:', theme);
@@ -72,8 +114,7 @@ export class LandingComponent implements OnInit {
       document.documentElement.style.setProperty('--text-font-size', sizeText);
     }
     if (mainFont && secondaryFont) {
-      document.documentElement.style.setProperty('--main-font', mainFont);
-      document.documentElement.style.setProperty('--secondary-font', secondaryFont);
+      this.applyFonts();
     }
 
     this.applyStyles();

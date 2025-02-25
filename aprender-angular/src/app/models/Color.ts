@@ -15,6 +15,6 @@ export interface Pallette {
     }
     typo1: string;
     typo2: string;
-    typo1File?: File | null; // Permitir null
-    typo2File?: File | null; // Permitir null
+    typo1File?: File | null | string; // Permitir null
+    typo2File?: File | null | string; // Permitir null
   }

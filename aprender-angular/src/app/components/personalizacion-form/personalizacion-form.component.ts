@@ -46,9 +46,9 @@ export class PersonalizacionFormComponent implements OnInit {
 
   constructor(private userService: UserDataService, private themeService:ThemeService){}
 
-  applyPalette(palette: Pallette) {
-    console.log('Aplicando paleta:', palette);
   
+
+  applyPalette(palette: Pallette) {
     this.themeService.applyTheme({
       primaryColor: palette.colors.primary,
       secondaryColor: palette.colors.secondary,
@@ -59,8 +59,12 @@ export class PersonalizacionFormComponent implements OnInit {
       sizeSubtitle: palette.sizes.sizeSubtitle,
       sizeText: palette.sizes.sizeText,
       mainFont: palette.typo1,
-      secondaryFont: palette.typo2
+      secondaryFont: palette.typo2,
+      mainFontUrl: palette.typo1File,
+      secondaryFontUrl: palette.typo2File
     });
+
+    console.log(palette.typo1File?.toString());
   
     localStorage.setItem('primaryColor', palette.colors.primary);
     localStorage.setItem('secondaryColor', palette.colors.secondary);
@@ -72,6 +76,12 @@ export class PersonalizacionFormComponent implements OnInit {
     localStorage.setItem('sizeText', palette.sizes.sizeText);
     localStorage.setItem('mainFont', palette.typo1);
     localStorage.setItem('secondaryFont', palette.typo2);
+    if (palette.typo1File) {
+    localStorage.setItem('mainFontUrl', palette.typo1File.toString());
+    }
+    if (palette.typo2File) {
+    localStorage.setItem('secondaryFontUrl', palette.typo2File.toString());
+    }
   }
 
   createPalletteObject(): Pallette {
@@ -117,7 +127,6 @@ export class PersonalizacionFormComponent implements OnInit {
     }
     const pallette = this.createPalletteObject();
     const formData = new FormData();
-    console.log(pallette)
 
     // Agregar los datos al FormData
     formData.append('name', pallette.name);
@@ -146,10 +155,6 @@ export class PersonalizacionFormComponent implements OnInit {
 
 
   // Método para actualizar la vista previa
-  updatePreview() {
-    // Aquí puedes agregar lógica adicional si es necesario
-    console.log('Vista previa actualizada');
-  }
 
   // Método para manejar la carga de tipografías
   onMainFontChange(event: Event) {
@@ -157,6 +162,7 @@ export class PersonalizacionFormComponent implements OnInit {
     if (input.files && input.files[0]) {
       this.mainFont = input.files[0];
       this.loadFont(this.mainFont, 'MainFont');
+      
     }
   }
 
@@ -191,8 +197,6 @@ export class PersonalizacionFormComponent implements OnInit {
     this.sizeSubtitle = paletteToEdit.sizes.sizeSubtitle;
     this.sizeText = paletteToEdit.sizes.sizeText;
     
-    // Actualizar la vista previa
-    this.updatePreview();
 }
 
 // Agregar estos nuevos métodos
@@ -252,8 +256,6 @@ cancelEdit() {
     this.mainFont = null;
     this.secondaryFont = null;
     
-    // Actualizar la vista previa
-    this.updatePreview();
 }
 
   deletePallette(palletteId: number) {
@@ -277,7 +279,8 @@ cancelEdit() {
       const fontFace = new FontFace(fontName, `url(${fontUrl})`);
       fontFace.load().then((loadedFont) => {
         document.fonts.add(loadedFont);
-        this.updatePreview();
+        console.log('Font Loaded');
+        console.log(fontUrl);
       });
     };
     reader.readAsDataURL(file);
@@ -303,7 +306,6 @@ cancelEdit() {
           colors: JSON.parse(pallette.colors),
           sizes: JSON.parse(pallette.sizes),
         }));
-        console.log(this.palettes);
       },
       error: (error) => {
         console.log(error)

@@ -11,7 +11,8 @@ export class ThemeService {
   constructor() {}
 
   applyTheme(theme: any) {
-    console.log('Aplicando tema:', theme);
     this.themeSubject.next(theme);
   }
+
+  
 }

@@ -13,7 +13,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i&display=swap");
-root {
+:root {
   --blue: #79A9F5;
   --indigo: #C45F90;
   --purple: #A16AE8;
@@ -44,9 +44,21 @@ root {
   --subtitle-font-size: 200px;
   --text-font-size: 20px;
 
+  --main-font: 'CustomFont', sans-serif;
+  --secondary-font: system-ui, -apple-system, sans-serif;
+
   --font-family-sans-serif: "Source Sans Pro", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+
+.m-font{
+  font-family: 'CustomFont', sans-serif !important;
+}
+
+.s-font{
+  font-family: 'CustomFontSecondary', sans-serif !important;
+}
+
 
 *,
 *::before,
