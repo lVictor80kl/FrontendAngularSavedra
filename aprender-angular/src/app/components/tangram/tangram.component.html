@@ -1,0 +1,75 @@
+<div class="tangram-container">
+  <!-- Figura 74 - Cuadrado con flecha -->
+  <div class="tangram-shape" [class.active]="currentShape === 0 || (isAnimating && currentShape === 0)">
+    <!-- Triángulo grande 1 -->
+    <div class="piece triangle-large-1" [class.animate-to-66]="isAnimating && nextShape === 1" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Triángulo grande 2 -->
+    <div class="piece triangle-large-2" [class.animate-to-66]="isAnimating && nextShape === 1" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Triángulo mediano -->
+    <div class="piece triangle-medium" [class.animate-to-66]="isAnimating && nextShape === 1" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Triángulo pequeño 1 -->
+    <div class="piece triangle-small-1" [class.animate-to-66]="isAnimating && nextShape === 1" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Triángulo pequeño 2 -->
+    <div class="piece triangle-small-2" [class.animate-to-66]="isAnimating && nextShape === 1" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Cuadrado -->
+    <div class="piece square" [class.animate-to-66]="isAnimating && nextShape === 1" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Paralelogramo -->
+    <div class="piece parallelogram" [class.animate-to-66]="isAnimating && nextShape === 1" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+  </div>
+  
+  <!-- Figura 66 - Barco/Velero -->
+  <div class="tangram-shape" [class.active]="currentShape === 1 || (isAnimating && showNextShape && nextShape === 1)">
+    <!-- Triángulo grande 1 -->
+    <div class="piece triangle-large-1-fig66" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Triángulo grande 2 -->
+    <div class="piece triangle-large-2-fig66" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Triángulo mediano -->
+    <div class="piece triangle-medium-fig66" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Triángulo pequeño 1 -->
+    <div class="piece triangle-small-1-fig66" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Triángulo pequeño 2 -->
+    <div class="piece triangle-small-2-fig66" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Cuadrado -->
+    <div class="piece square-fig66" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+    
+    <!-- Paralelogramo -->
+    <div class="piece parallelogram-fig66" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-190]="isAnimating && nextShape === 2"></div>
+  </div>
+  
+  <!-- Figura 190 - Persona/Personaje -->
+  <div class="tangram-shape" [class.active]="currentShape === 2 || (isAnimating && showNextShape && nextShape === 2)">
+       <!-- Triángulo grande 1 -->
+       <div class="piece head-fig190" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-66]="isAnimating && nextShape === 1"></div>
+       
+       <!-- Triángulo grande 2 -->
+       <div class="piece body-fig190" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-66]="isAnimating && nextShape === 1"></div>
+       
+       <!-- Triángulo mediano -->
+       <div class="piece left-arm-fig190" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-66]="isAnimating && nextShape === 1"></div>
+       
+       <!-- Triángulo pequeño 1 -->
+       <div class="piece right-arm-fig190" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-66]="isAnimating && nextShape === 1"></div>
+       
+       <!-- Triángulo pequeño 2 -->
+       <div class="piece middle-fig190" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-66]="isAnimating && nextShape === 1"></div>
+       
+       <!-- Cuadrado -->
+       <div class="piece left-leg-fig190" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-66]="isAnimating && nextShape === 1"></div>
+       
+       <!-- Paralelogramo -->
+       <div class="piece right-leg-fig190" [class.animate-to-74]="isAnimating && nextShape === 0" [class.animate-to-66]="isAnimating && nextShape === 1"></div>
+  </div>
+  
+  <div class="loading-text">Loading...</div>
+</div>

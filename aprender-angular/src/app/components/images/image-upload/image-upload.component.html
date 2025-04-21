@@ -1,0 +1,77 @@
+<div class="image-upload-container">
+  <div class="upload-section" *ngIf="!showCropper">
+    <h3>Subir Imagen</h3>
+    <div class="upload-box">
+      <input 
+        type="file" 
+        (change)="fileChangeEvent($event)" 
+        accept="image/jpeg,image/jpg,image/png,image/webp"
+        #fileInput
+      >
+      <button 
+        class="upload-btn" 
+        (click)="fileInput.click()"
+        style="background-color: var(--primary); color: var(--white);"
+      >
+        Seleccionar Imagen
+      </button>
+      <p class="upload-info">Formatos admitidos: JPG, PNG, WebP</p>
+      <p class="upload-info">Dimensiones mínimas: {{minWidth}}x{{minHeight}}px</p>
+    </div>
+  </div>
+
+  <div class="cropper-container" *ngIf="showCropper">
+    <h3>Recortar Imagen</h3>
+    
+    <div class="cropper-wrapper">
+      <img #image [src]="imageSource" style="max-width: 100%;">
+    </div>
+    
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    
+    <div class="controls">
+      <div class="zoom-controls">
+        <button (click)="zoomOut()" style="background-color: var(--accent);">
+          <i class="ti-zoom-out"></i> -
+        </button>
+        <button (click)="zoomIn()" style="background-color: var(--accent);">
+          <i class="ti-zoom-in"></i> +
+        </button>
+      </div>
+      
+      <div class="rotation-controls">
+        <button (click)="rotateLeft()" style="background-color: var(--accent);">
+          <i class="ti-angle-left"></i> ↺
+        </button>
+        <button (click)="rotateRight()" style="background-color: var(--accent);">
+          <i class="ti-angle-right"></i> ↻
+        </button>
+      </div>
+    </div>
+    
+    <div class="preview" *ngIf="croppedImage">
+      <h4>Vista Previa</h4>
+      <img [src]="croppedImage" alt="Vista previa">
+    </div>
+    
+    <div class="action-buttons">
+      <button 
+        class="cancel-btn" 
+        (click)="resetCropper()"
+        style="background-color: var(--secondary); color: var(--primary);"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="save-btn" 
+        (click)="saveImage()" 
+        [disabled]="errorMessage"
+        style="background-color: var(--primary); color: var(--white);"
+      >
+        Guardar Imagen
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+@if (loading.isLoading()) {
+    <div [style]="{  width: '100vw', height: '100vh', display: 'flex', 'align-items': 'center', 'justify-content': 'center' }" >
+    <!-- <div class="position-fixed z-3"> -->
+        <app-tangram />
+    </div>
+} @else {
+    <ng-content></ng-content>
+}
+

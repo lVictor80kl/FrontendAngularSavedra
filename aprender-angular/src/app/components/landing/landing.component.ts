@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../services/theme-service.service';
+import { TangramComponent } from '../tangram/tangram.component';
+import { LoadingService } from '../loading/loading.service';
+import { ImageListComponent } from '../images/image-list/image-list.component';
+import { ImageUploadComponent } from '../images/image-upload/image-upload.component';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule, RouterLink, TangramComponent, ImageListComponent, ImageUploadComponent],
   providers: [ThemeService]
 })
 export class LandingComponent implements OnInit {
+  _loading = inject(LoadingService);
 
   constructor(private themeService: ThemeService) { 
     this.applyFonts();
@@ -19,7 +25,12 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
     console.log('OnInit');
     this.loadStylesFromLocalStorage();
-    
+
+    this._loading.isLoading.set(true);
+
+    setTimeout(() => {
+      this._loading.isLoading.set(false);
+    }, 18000);
   }
 
   applyFonts() {
@@ -29,37 +40,32 @@ export class LandingComponent implements OnInit {
     let secondary;
 
     if (mainFontUrl && secondaryFontUrl) {
-        main = mainFontUrl.split('\\');
-        secondary = secondaryFontUrl.split('\\');
-        console.log(main, secondary);
+      main = mainFontUrl.split('\\');
+      secondary = secondaryFontUrl.split('\\');
+      console.log(main, secondary);
     }
 
     if (main && secondary) {
-        const mainUrl = `http://localhost:3000/${main[0]}/${main[1]}`;
-        const secondaryUrl = `http://localhost:3000/${secondary[0]}/${secondary[1]}`;
-        const fontFace = new FontFace('CustomFont', `url(${mainUrl})`);
-        const subFontFace = new FontFace('CustomFontSecondary', `url(${secondaryUrl})`);
+      const mainUrl = `http://localhost:3000/${main[0]}/${main[1]}`;
+      const secondaryUrl = `http://localhost:3000/${secondary[0]}/${secondary[1]}`;
+      const fontFace = new FontFace('CustomFont', `url(${mainUrl})`);
+      const subFontFace = new FontFace('CustomFontSecondary', `url(${secondaryUrl})`);
 
-        console.log(mainUrl, secondaryUrl);
+      console.log(mainUrl, secondaryUrl);
 
-        fontFace.load().then((loadedFont) => {
-            document.fonts.add(loadedFont);
+      fontFace.load().then((loadedFont) => {
+        document.fonts.add(loadedFont);
+        console.log('Font Loaded and Applied');
+      }).catch((error) => {
+        console.error('Error loading font:', error);
+      });
 
-
-            console.log('Font Loaded and Applied');
-        }).catch((error) => {
-            console.error('Error loading font:', error);
-        });
-
-        subFontFace.load().then((loadedFont) => {
-            document.fonts.add(loadedFont);
-
-
-            console.log('Secondary Font Loaded and Applied');
-        })
+      subFontFace.load().then((loadedFont) => {
+        document.fonts.add(loadedFont);
+        console.log('Secondary Font Loaded and Applied');
+      });
     }
-}
-
+  }
 
   applyTheme(theme: any) {
     console.log('Aplicando tema:', theme);

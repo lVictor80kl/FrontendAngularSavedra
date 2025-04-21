@@ -1,0 +1,559 @@
+.tangram-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 300px;
+  /* height: 300px; */
+  margin: 0 auto;
+  position: relative;
+}
+
+.tangram-shape {
+  position: absolute;
+  width: 200px;
+  height: 500px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.tangram-shape.active {
+  opacity: 1;
+}
+
+.piece {
+  position: absolute;
+  /* Tiempo de transición aumentado para un armado más lento */
+  transition: all 3s ease-in-out;
+  /* Borde añadido para hacer más visibles las separaciones entre piezas */
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.loading-text {
+  position: absolute;
+  bottom: -7em;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* FIGURA 74 - CUADRADO CON FLECHA - Triángulos grandes actualizados */
+.triangle-large-1 {
+  top: 65px;
+  left: 40px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 100px 100px;
+  border-color: transparent transparent transparent #FF5252;
+  transform: rotate(-135deg);
+  transform-origin: center;
+}
+
+.triangle-large-2 {
+  top: 165px;
+  left: 132px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 100px 100px 0;
+  border-color: transparent #448AFF transparent transparent;
+  transform: rotate(-135deg);
+  transform-origin: center;
+}
+
+.triangle-medium {
+  top: 133px;
+  left: -22px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 70px 0 0 70px;
+  border-color: transparent transparent transparent #66BB6A;
+  transform: rotate(-135deg);
+  transform-origin: center;
+}
+
+.triangle-small-1 {
+  top: 181px;
+  left: 10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 0 0 50px;
+  border-color: transparent transparent transparent #FFC107;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.triangle-small-2 {
+  top: 236px;
+  left: 68px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 50px 50px 0;
+  border-color: transparent #9C27B0 transparent transparent;
+  transform: rotate(180deg);
+  transform-origin: center;
+}
+
+.square {
+  top: 236px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: #FF9800;
+  transform-origin: center;
+}
+
+/* Paralelogramo corregido con las nuevas medidas */
+.parallelogram {
+  top: 238px;
+  left: 100px;
+  width: 50px;
+  height: 45px;
+  background-color: #00BCD4;
+  transform: skewX(45deg) rotate(90deg);
+  transform-origin: center;
+}
+
+/* FIGURA 66 - BARCO/VELERO */
+.triangle-large-1-fig66 {
+  top: 33px;
+  left: 125px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 100px 100px;
+  border-color: transparent transparent transparent #FF5252;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.triangle-large-2-fig66 {
+  top: 117px;
+  left: 17px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 100px 100px 0;
+  border-color: transparent #448AFF transparent transparent;
+  transform: rotate(90deg);
+  transform-origin: center;
+}
+
+.triangle-medium-fig66 {
+  top: 154px;
+  left: 184px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 70px 0 0 70px;
+  border-color: transparent transparent transparent #66BB6A;
+  transform-origin: center;
+}
+
+.triangle-small-1-fig66 {
+  top: 113px;
+  left: 125px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 0 0 50px;
+  border-color: transparent transparent transparent #FFC107;
+  transform-origin: center;
+}
+
+.triangle-small-2-fig66 {
+  top: 205px;
+  left: 174px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 50px 50px 0;
+  border-color: transparent #9C27B0 transparent transparent;
+  transform: rotate(135deg);
+  transform-origin: center;
+}
+
+.square-fig66 {
+  top: 171px;
+  left: 125px;
+  width: 50px;
+  height: 50px;
+  background-color: #FF9800;
+  transform-origin: center;
+}
+
+/* Paralelogramo corregido con las nuevas medidas */
+.parallelogram-fig66 {
+  top: 226px;
+  left: 95px;
+  width: 70px;
+  height: 40px;
+  background-color: #00BCD4;
+  transform: skewX(45deg);
+  transform-origin: center;
+}
+
+/* FIGURA 190 - PERSONA/PERSONAJE */
+.head-fig190 {
+  top: 36px;
+  left: 124px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 100px 100px;
+  border-color: transparent transparent transparent #FF5252;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.body-fig190 {
+  top: 157px;
+  left: 94px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 100px 100px 0;
+  border-color: transparent #448AFF transparent transparent;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.left-arm-fig190 {
+  top: 227px;
+  left: 142px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 70px 0 0 70px;
+  border-color: transparent transparent transparent #66BB6A;
+  transform: rotate(135deg);
+  transform-origin: center;
+}
+
+.right-arm-fig190 {
+  top: 96px;
+  left: 153px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 0 0 50px;
+  border-color: transparent transparent transparent #FFC107;
+  transform: rotate(-135deg);
+  transform-origin: center;
+}
+
+.middle-fig190 {
+  top: 19px;
+  left: 73px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 50px 50px 0;
+  border-color: transparent #9C27B0 transparent transparent;
+  transform: rotate(45deg);
+  transform-origin: center;
+}
+
+.left-leg-fig190 {
+  top: 106px;
+  left: 74px;
+  width: 50px;
+  height: 50px;
+  background-color: #FF9800;
+  transform: rotate(45deg);
+  transform-origin: center;
+}
+
+/* Paralelogramo corregido con las nuevas medidas */
+.right-leg-fig190 {
+  top: 216px;
+  left: 90px;
+  width: 50px;
+  height: 45px;
+  background-color: #00BCD4;
+  transform: skewX(-45deg) rotate(90deg);
+  transform-origin: center;
+}
+
+/* Animaciones de Figura 74 a Figura 66 - Actualizadas para los triángulos grandes */
+.triangle-large-1.animate-to-66 {
+  top: 33px;
+  left: 125px;
+  transform: rotate(-45deg);
+}
+
+.triangle-large-2.animate-to-66 {
+  top: 117px;
+  left: 17px;
+  transform: rotate(90deg);
+}
+
+.triangle-medium.animate-to-66 {
+  top: 154px;
+  left: 184px;
+  transform: none;
+}
+
+.triangle-small-1.animate-to-66 {
+  top: 113px;
+  left: 125px;
+  transform: none;
+}
+
+.triangle-small-2.animate-to-66 {
+  top: 205px;
+  left: 174px;
+  transform: rotate(135deg);
+}
+
+.square.animate-to-66 {
+  top: 171px;
+  left: 125px;
+  transform: none;
+}
+
+/* Animación actualizada para el paralelogramo */
+.parallelogram.animate-to-66 {
+  top: 226px;
+  left: 95px;
+  width: 70px;
+  height: 40px;
+  transform: skewX(45deg);
+}
+
+/* Animaciones de Figura 74 a Figura 190 - Actualizadas para los triángulos grandes */
+.triangle-large-1.animate-to-190 {
+  top: 36px;
+  left: 124px;
+  transform: rotate(-45deg);
+}
+
+.triangle-large-2.animate-to-190 {
+  top: 157px;
+  left: 94px;
+  transform: rotate(-45deg);
+}
+
+.triangle-medium.animate-to-190 {
+  top: 227px;
+  left: 142px;
+  transform: rotate(135deg);
+}
+
+.triangle-small-1.animate-to-190 {
+  top: 96px;
+  left: 153px;
+  transform: rotate(-135deg);
+}
+
+.triangle-small-2.animate-to-190 {
+  top: 19px;
+  left: 73px;
+  transform: rotate(45deg);
+}
+
+.square.animate-to-190 {
+  top: 106px;
+  left: 74px;
+  transform: rotate(45deg);
+}
+
+/* Animación actualizada para el paralelogramo */
+.parallelogram.animate-to-190 {
+  top: 216px;
+  left: 90px;
+  width: 50px;
+  height: 45px;
+  transform: skewX(-45deg) rotate(90deg);
+}
+
+/* Animaciones de Figura 66 a Figura 74 - Actualizadas para los triángulos grandes */
+.triangle-large-1-fig66.animate-to-74 {
+  top: 65px;
+  left: 40px;
+  transform: rotate(-135deg);
+}
+
+.triangle-large-2-fig66.animate-to-74 {
+  top: 165px;
+  left: 132px;
+  transform: rotate(-135deg);
+}
+
+.triangle-medium-fig66.animate-to-74 {
+  top: 133px;
+  left: -22px;
+  transform: rotate(-135deg);
+}
+
+.triangle-small-1-fig66.animate-to-74 {
+  top: 181px;
+  left: 10px;
+  transform: rotate(-90deg);
+}
+
+.triangle-small-2-fig66.animate-to-74 {
+  top: 236px;
+  left: 68px;
+  transform: rotate(180deg);
+}
+
+.square-fig66.animate-to-74 {
+  top: 236px;
+  left: 10px;
+  transform: none;
+}
+
+/* Animación actualizada para el paralelogramo */
+.parallelogram-fig66.animate-to-74 {
+  top: 238px;
+  left: 100px;
+  width: 50px;
+  height: 45px;
+  transform: skewX(45deg) rotate(90deg);
+}
+
+/* Animaciones de Figura 66 a Figura 190 */
+.triangle-large-1-fig66.animate-to-190 {
+  top: 36px;
+  left: 124px;
+  transform: rotate(-45deg);
+}
+
+.triangle-large-2-fig66.animate-to-190 {
+  top: 157px;
+  left: 94px;
+  transform: rotate(-45deg);
+}
+
+.triangle-medium-fig66.animate-to-190 {
+  top: 227px;
+  left: 142px;
+  transform: rotate(135deg);
+}
+
+.triangle-small-1-fig66.animate-to-190 {
+  top: 96px;
+  left: 153px;
+  transform: rotate(-135deg);
+}
+
+.triangle-small-2-fig66.animate-to-190 {
+  top: 19px;
+  left: 73px;
+  transform: rotate(45deg);
+}
+
+.square-fig66.animate-to-190 {
+  top: 106px;
+  left: 74px;
+  transform: rotate(45deg);
+}
+
+/* Animación actualizada para el paralelogramo */
+.parallelogram-fig66.animate-to-190 {
+  top: 216px;
+  left: 90px;
+  width: 50px;
+  height: 45px;
+  transform: skewX(-45deg) rotate(90deg);
+}
+
+/* Animaciones de Figura 190 a Figura 74 - Actualizadas para los triángulos grandes */
+.head-fig190.animate-to-74 {
+  top: 65px;
+  left: 40px;
+  transform: rotate(-135deg);
+}
+
+.body-fig190.animate-to-74 {
+  top: 165px;
+  left: 132px;
+  transform: rotate(-135deg);
+}
+
+.left-arm-fig190.animate-to-74 {
+  top: 133px;
+  left: -22px;
+  transform: rotate(-135deg);
+}
+
+.right-arm-fig190.animate-to-74 {
+  top: 181px;
+  left: 10px;
+  transform: rotate(-90deg);
+}
+
+.middle-fig190.animate-to-74 {
+  top: 236px;
+  left: 68px;
+  transform: rotate(180deg);
+}
+
+.left-leg-fig190.animate-to-74 {
+  top: 236px;
+  left: 10px;
+  transform: none;
+}
+
+/* Animación actualizada para el paralelogramo */
+.right-leg-fig190.animate-to-74 {
+  top: 238px;
+  left: 100px;
+  width: 50px;
+  height: 45px;
+  transform: skewX(45deg) rotate(90deg);
+}
+
+/* Animaciones de Figura 190 a Figura 66 */
+.head-fig190.animate-to-66 {
+  top: 33px;
+  left: 125px;
+  transform: rotate(-45deg);
+}
+
+.body-fig190.animate-to-66 {
+  top: 117px;
+  left: 17px;
+  transform: rotate(90deg);
+}
+
+.left-arm-fig190.animate-to-66 {
+  top: 154px;
+  left: 184px;
+  transform: none;
+}
+
+.right-arm-fig190.animate-to-66 {
+  top: 113px;
+  left: 125px;
+  transform: none;
+}
+
+.middle-fig190.animate-to-66 {
+  top: 205px;
+  left: 174px;
+  transform: rotate(135deg);
+}
+
+.left-leg-fig190.animate-to-66 {
+  top: 171px;
+  left: 125px;
+  transform: none;
+}
+
+/* Animación actualizada para el paralelogramo */
+.right-leg-fig190.animate-to-66 {
+  top: 226px;
+  left: 95px;
+  width: 70px;
+  height: 40px;
+  transform: skewX(45deg);
+}
