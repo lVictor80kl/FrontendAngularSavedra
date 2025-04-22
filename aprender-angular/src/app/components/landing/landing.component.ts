@@ -6,13 +6,14 @@ import { TangramComponent } from '../tangram/tangram.component';
 import { LoadingService } from '../loading/loading.service';
 import { ImageListComponent } from '../images/image-list/image-list.component';
 import { ImageUploadComponent } from '../images/image-upload/image-upload.component';
+import { handleImageUpload } from '../../services/image.service';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterLink, TangramComponent, ImageListComponent, ImageUploadComponent],
+  imports: [CommonModule, RouterLink, TangramComponent, ImageListComponent, ImageUploadComponent, ImageUploadComponent, handleImageUpload],
   providers: [ThemeService]
 })
 export class LandingComponent implements OnInit {

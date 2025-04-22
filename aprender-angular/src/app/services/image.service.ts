@@ -1,100 +1,103 @@
-// services/image.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 
-export interface Image {
-  id: string;
+export interface ImageInfo {
+  id?: string;
+  src: string;
   name: string;
-  url: string;
-  thumbnail?: string;
-  format: string;
+  type: string;
+  size: number;
   width: number;
   height: number;
-  size: number;
-  uploadDate: Date;
+  createdAt?: Date;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService {
-  private apiUrl = '/api/images'; // Ajustar según la API real
+  private images: ImageInfo[] = [];
+  private imagesSubject = new BehaviorSubject<ImageInfo[]>([]);
+  private selectedImageSubject = new BehaviorSubject<ImageInfo | null>(null);
 
-  constructor(private http: HttpClient) { }
+  // Observables que los componentes pueden suscribirse
+  public images$ = this.imagesSubject.asObservable();
+  public selectedImage$ = this.selectedImageSubject.asObservable();
 
-  getImages(): Observable<Image[]> {
-    return this.http.get<Image[]>(this.apiUrl)
-      .pipe(
-        catchError(this.handleError)
-      );
+  constructor() {
+    // Cargar imágenes guardadas en localStorage al iniciar
+    this.loadFromStorage();
   }
 
-  getImageById(id: string): Observable<Image> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Image>(url)
-      .pipe(
-        catchError(this.handleError)
-      );
+  getImages(): Observable<ImageInfo[]> {
+    return this.images$;
   }
 
-  uploadImage(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('image', file);
-    
-    const req = new HttpRequest('POST', this.apiUrl, formData, {
-      reportProgress: true
-    });
-    
-    return this.http.request(req).pipe(
-      map(event => {
-        switch (event.type) {
-          case HttpEventType.UploadProgress:
-            return {
-              type: 'progress',
-              loaded: event.loaded,
-              total: event.total
-            };
-          case HttpEventType.Response:
-            return {
-              type: 'complete',
-              body: event.body
-            };
-          default:
-            return {
-              type: 'other'
-            };
-        }
-      }),
-      catchError(this.handleError)
-    );
-  }
-
-  updateImage(id: string, data: any): Observable<Image> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.put<Image>(url, data)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  deleteImage(id: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete(url)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  private handleError(error: any): Observable<never> {
-    console.error('Error en el servicio de imágenes:', error);
-    let errorMessage = 'Ha ocurrido un error en el servidor. Inténtelo de nuevo más tarde.';
-    
-    if (error.error && error.error.message) {
-      errorMessage = error.error.message;
+  addImage(image: ImageInfo): void {
+    // Asignar un ID único si no tiene
+    if (!image.id) {
+      image.id = uuidv4();
     }
     
-    return throwError(() => new Error(errorMessage));
+    // Agregar la imagen al arreglo
+    this.images.push(image);
+    
+    // Actualizar el observable y localStorage
+    this.imagesSubject.next([...this.images]);
+    this.saveToStorage();
+  }
+
+  selectImage(id: string): void {
+    const image = this.images.find(img => img.id === id) || null;
+    this.selectedImageSubject.next(image);
+  }
+
+  deleteImage(id: string): void {
+    // Filtrar la imagen a eliminar
+    this.images = this.images.filter(img => img.id !== id);
+    
+    // Actualizar el observable y localStorage
+    this.imagesSubject.next([...this.images]);
+    this.saveToStorage();
+    
+    // Si la imagen seleccionada era la que se eliminó, limpiar la selección
+    const selectedImage = this.selectedImageSubject.value;
+    if (selectedImage && selectedImage.id === id) {
+      this.selectedImageSubject.next(null);
+    }
+  }
+
+  isValidImageFormat(mimeType: string): boolean {
+    const validFormats = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    return validFormats.includes(mimeType);
+  }
+
+  private saveToStorage(): void {
+    try {
+      localStorage.setItem('gallery_images', JSON.stringify(this.images));
+    } catch (error) {
+      console.error('Error saving images to localStorage:', error);
+    }
+  }
+
+  private loadFromStorage(): void {
+    try {
+      const savedImages = localStorage.getItem('gallery_images');
+      if (savedImages) {
+        this.images = JSON.parse(savedImages);
+        
+        // Convertir fechas de string a objeto Date
+        this.images.forEach(img => {
+          if (img.createdAt) {
+            img.createdAt = new Date(img.createdAt);
+          }
+        });
+        
+        this.imagesSubject.next([...this.images]);
+      }
+    } catch (error) {
+      console.error('Error loading images from localStorage:', error);
+    }
   }
 }

@@ -24,7 +24,7 @@
     <h3>Recortar Imagen</h3>
     
     <div class="cropper-wrapper">
-      <img #image [src]="imageSource" style="max-width: 100%;">
+      <img #image [src]="imageSource" style="max-width: 100%; display: block;">
     </div>
     
     <div class="error-message" *ngIf="errorMessage">
@@ -34,19 +34,19 @@
     <div class="controls">
       <div class="zoom-controls">
         <button (click)="zoomOut()" style="background-color: var(--accent);">
-          <i class="ti-zoom-out"></i> -
+          -
         </button>
         <button (click)="zoomIn()" style="background-color: var(--accent);">
-          <i class="ti-zoom-in"></i> +
+          +
         </button>
       </div>
       
       <div class="rotation-controls">
         <button (click)="rotateLeft()" style="background-color: var(--accent);">
-          <i class="ti-angle-left"></i> ↺
+          ↺
         </button>
         <button (click)="rotateRight()" style="background-color: var(--accent);">
-          <i class="ti-angle-right"></i> ↻
+          ↻
         </button>
       </div>
     </div>
@@ -67,7 +67,7 @@
       <button 
         class="save-btn" 
         (click)="saveImage()" 
-        [disabled]="errorMessage"
+        [disabled]="!!errorMessage"
         style="background-color: var(--primary); color: var(--white);"
       >
         Guardar Imagen
