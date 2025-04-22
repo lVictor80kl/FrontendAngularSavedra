@@ -13,7 +13,7 @@ import { handleImageUpload } from '../../services/image.service';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterLink, TangramComponent, ImageListComponent, ImageUploadComponent, ImageUploadComponent, handleImageUpload],
+  imports: [CommonModule, RouterLink, TangramComponent, ImageListComponent, ImageUploadComponent],
   providers: [ThemeService]
 })
 export class LandingComponent implements OnInit {

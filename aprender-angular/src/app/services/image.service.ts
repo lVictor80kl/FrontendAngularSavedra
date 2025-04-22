@@ -101,3 +101,9 @@ export class ImageService {
     }
   }
 }
+
+// Función exportada fuera de la clase
+export function handleImageUpload(imageInfo: ImageInfo): void {
+  console.log('Imagen subida:', imageInfo);
+  // Aquí puedes hacer lo que necesites con la información de la imagen
+}
