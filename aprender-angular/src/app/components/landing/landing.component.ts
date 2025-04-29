@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../services/theme-service.service';
@@ -6,6 +6,7 @@ import { TangramComponent } from '../tangram/tangram.component';
 import { LoadingService } from '../loading/loading.service';
 import { VideoUploadComponent } from '../video-upload/video-upload.component';
 import { ImageUploadComponent } from '../image-upload/image-upload.component';
+import { MultimediaService } from '../../services/multimedia.service';
 
 @Component({
   selector: 'app-landing',
@@ -13,12 +14,17 @@ import { ImageUploadComponent } from '../image-upload/image-upload.component';
   styleUrls: ['./landing.component.css'],
   standalone: true,
   imports: [CommonModule, RouterLink, TangramComponent, VideoUploadComponent, ImageUploadComponent],
-  providers: [ThemeService]
+  providers: [ThemeService, MultimediaService]
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, OnDestroy {
   _loading = inject(LoadingService);
+  images: string[] = [];
+  currentIndex = 0;
+  intervalId: any;
+  videos: any[] = [];
+  currentVideoIndex: number = 0;
 
-  constructor(private themeService: ThemeService) { 
+  constructor(private themeService: ThemeService, private multimediaService: MultimediaService) { 
     this.applyFonts();
   }
 
@@ -26,11 +32,97 @@ export class LandingComponent implements OnInit {
     console.log('OnInit');
     this.loadStylesFromLocalStorage();
 
-    this._loading.isLoading.set(true);
+    // Loader solo la primera vez
+    const loadedOnce = localStorage.getItem('landingLoadedOnce');
+    if (!loadedOnce) {
+      this._loading.isLoading.set(true);
+      setTimeout(() => {
+        this._loading.isLoading.set(false);
+        localStorage.setItem('landingLoadedOnce', 'true');
+      }, 1800); // 1.8 segundos la primera vez
+    } else {
+      this._loading.isLoading.set(true);
+      setTimeout(() => {
+        this._loading.isLoading.set(false);
+      }, 300); // Solo 0.3 segundos en recargas
+    }
 
-    setTimeout(() => {
-      this._loading.isLoading.set(false);
-    }, 18000);
+    this.loadImages();
+    this.loadVideos();
+  }
+
+  loadImages() {
+    this.multimediaService.getImages().subscribe((files) => {
+      console.log('Imágenes recibidas del backend:', files);
+      this.images = (files as any[]).map(f => {
+        if (typeof f === 'string') {
+          return `http://localhost:3000/media/image/${f}`;
+        } else if (f && typeof f === 'object' && 'filename' in f) {
+          return `http://localhost:3000/media/image/${(f as any).filename}`;
+        } else if (f && typeof f === 'object' && 'url' in f) {
+          return `http://localhost:3000${(f as any).url}`;
+        } else {
+          return '';
+        }
+      });
+      console.log('URLs generadas para el carrusel:', this.images);
+    });
+    this.startCarousel();
+  }
+
+  loadVideos() {
+    this.multimediaService.getVideos().subscribe((videos: any[]) => {
+      this.videos = videos;
+    });
+  }
+
+  getVideoUrl(video: any): string {
+    return video.url ? `http://localhost:3000${video.url}` : '';
+  }
+
+  getSubtitleUrl(subUrl: string): string {
+    return subUrl ? `http://localhost:3000${subUrl}` : '';
+  }
+
+  isDefaultLang(lang: string): boolean {
+    const browserLang = navigator.language.split('-')[0].toLowerCase();
+    return browserLang === lang;
+  }
+
+  startCarousel() {
+    this.intervalId = setInterval(() => {
+      this.next();
+    }, 2500);
+  }
+
+  next() {
+    if (this.images.length > 0) {
+      this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    }
+  }
+
+  prev() {
+    if (this.images.length > 0) {
+      this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    }
+  }
+
+  prevVideo() {
+    if (this.videos.length > 0) {
+      this.currentVideoIndex = (this.currentVideoIndex - 1 + this.videos.length) % this.videos.length;
+    }
+  }
+
+  nextVideo() {
+    if (this.videos.length > 0) {
+      this.currentVideoIndex = (this.currentVideoIndex + 1) % this.videos.length;
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   applyFonts() {
