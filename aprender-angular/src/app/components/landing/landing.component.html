@@ -112,6 +112,51 @@
     </div>
 </div>
 
+<section class="section" id="carousel-home" style="background-color: var(--accent);">
+  <div class="container">
+    <h2 class="section-title" style="color: var(--primary);">Galería de Imágenes</h2>
+    <div class="carousel-wrapper">
+      <div class="carousel">
+        <img *ngFor="let img of images; let i = index" [src]="img" [class.active]="i === currentIndex" class="carousel-img" />
+      </div>
+      <div class="carousel-controls">
+        <button (click)="prev()" class="carousel-btn">&#10094;</button>
+        <button (click)="next()" class="carousel-btn">&#10095;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Carrusel de Videos -->
+<section class="section" id="carousel-videos" style="background-color: var(--accent);">
+  <div class="container">
+    <h2 class="section-title" style="color: var(--primary);">Galería de Videos</h2>
+    <div *ngIf="videos.length > 0" class="carousel-wrapper">
+      <div class="carousel">
+        <div *ngFor="let video of videos; let i = index">
+          <div *ngIf="i === currentVideoIndex">
+            <video controls width="100%" height="auto" style="max-width: 400px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.12);">
+              <source [src]="getVideoUrl(video)" type="video/mp4">
+              <track *ngIf="video.subtitlesEs" [attr.src]="getSubtitleUrl(video.subtitlesEs)" kind="subtitles" srclang="es" label="Español" [attr.default]="isDefaultLang('es') ? true : null">
+              <track *ngIf="video.subtitlesEn" [attr.src]="getSubtitleUrl(video.subtitlesEn)" kind="subtitles" srclang="en" label="English" [attr.default]="isDefaultLang('en') ? true : null">
+              Tu navegador no soporta la reproducción de videos.
+            </video>
+            <div class="video-info mt-2">
+              <h5 style="color: var(--primary);">{{ video.title }}</h5>
+              <p style="color: var(--secondary);">{{ video.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button (click)="prevVideo()" class="carousel-btn">&#10094;</button>
+        <button (click)="nextVideo()" class="carousel-btn">&#10095;</button>
+      </div>
+    </div>
+    <div *ngIf="videos.length === 0" class="text-center" style="color: var(--secondary);">No hay videos para mostrar.</div>
+  </div>
+</section>
+
 
 <!-- Resume Section -->
 <section class="section" id="resume" style="background-color: var(--additional-color-2); color: var(--white);">
@@ -346,6 +391,7 @@
 </section>
 
 <!-- Sección dedicada para el componente de carga de videos en el landing page -->
+<!--
 <section class="landing-section video-section" id="upload-video">
     <div class="container">
       <div class="row">
@@ -356,16 +402,16 @@
           </div>
         </div>
       </div>
-      
       <div class="row justify-content-center">
         <div class="col-lg-10">
           <app-video-upload> </app-video-upload>
         </div>
       </div>
     </div>
-  </section>
+</section>
 
-  <app-image-upload></app-image-upload>
+<app-image-upload></app-image-upload>
+-->
 
 <section class="section bg-custom-gray" id="price" style="background-color: var(--additional-color-2); color: var(--white);">
     <div class="container">

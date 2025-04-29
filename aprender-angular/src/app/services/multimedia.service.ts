@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MultimediaService {
+  private baseUrl = 'http://localhost:3000/media';
+
   // Simulación de una base de datos local
   private videos: Video[] = [];
   private videosSubject = new BehaviorSubject<Video[]>([]);
@@ -18,27 +20,57 @@ export class MultimediaService {
     this.loadFromLocalStorage();
   }
   
-  // Obtener todos los videos
-  getVideos(): Observable<Video[]> {
-    return this.videosSubject.asObservable();
+  // Subir una imagen
+  uploadImage(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file); // Multer espera 'file' como nombre de campo
+    return this.http.post(`${this.baseUrl}/upload-image`, formData);
   }
-  
+
+  // Subir un video
+  uploadVideo(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file); // Multer espera 'file' como nombre de campo
+    return this.http.post(`${this.baseUrl}/upload-video`, formData);
+  }
+
+  // Obtener todas las imágenes
+  getImages(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/images`);
+  }
+
+  // Obtener todos los videos
+  getVideos(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/videos`);
+  }
+
+  // Obtener una imagen por nombre de archivo
+  getImage(filename: string): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/image/${filename}`, { responseType: 'blob' });
+  }
+
+  // Obtener un video por nombre de archivo
+  getVideo(filename: string): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/video/${filename}`, { responseType: 'blob' });
+  }
+
   // Agregar un nuevo video
   addVideo(videoData: Omit<Video, 'id'>): Observable<Video> {
     const formData = new FormData();
     formData.append('title', videoData.title);
     formData.append('description', videoData.description);
     formData.append('file', videoData.file as File);
-    videoData.subtitles.forEach((subtitle, index) => {
-      formData.append(`subtitles[${index}][language]`, subtitle.language);
-      formData.append(`subtitles[${index}][file]`, subtitle.file);
-      formData.append(`subtitles[${index}][isDefault]`, subtitle.isDefault.toString()); // Asegúrate de que isDefault exista
-    });
+    // Enviar subtítulos como espera el backend
+    const subEs = videoData.subtitles.find(s => s.language === 'es');
+    const subEn = videoData.subtitles.find(s => s.language === 'en');
+    if (subEs) formData.append('subtitlesEs', subEs.file);
+    if (subEn) formData.append('subtitlesEn', subEn.file);
     if (videoData.thumbnailUrl) {
       formData.append('thumbnailUrl', videoData.thumbnailUrl);
     }
-
-    return this.http.post<Video>('/api/videos', formData); // Asegúrate de que la URL sea correcta
+    // Log para depuración
+    console.log('FormData para video:', Array.from(formData.entries()));
+    return this.http.post<Video>(`${this.baseUrl}/upload-video`, formData);
   }
   
   // Obtener un video por ID

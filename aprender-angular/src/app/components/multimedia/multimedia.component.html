@@ -1,0 +1,24 @@
+<app-sidebar></app-sidebar>
+<div class="multimedia-container">
+  <h2 class="section-title">Multimedia</h2>
+  <div class="multimedia-section">
+    <h3 class="section-subtitle">Sube tus imágenes</h3>
+    <app-image-upload></app-image-upload>
+  </div>
+  <div class="multimedia-section">
+    <h3 class="section-subtitle">Sube tus videos</h3>
+    <app-video-upload></app-video-upload>
+  </div>
+  <div class="multimedia-section">
+    <h3 class="section-subtitle">Carrusel de Imágenes</h3>
+    <div class="carousel-wrapper">
+      <div class="carousel" #carousel>
+        <img *ngFor="let img of images; let i = index" [src]="img" [class.active]="i === currentIndex" class="carousel-img" />
+      </div>
+      <div class="carousel-controls">
+        <button (click)="prev()" class="carousel-btn">&#10094;</button>
+        <button (click)="next()" class="carousel-btn">&#10095;</button>
+      </div>
+    </div>
+  </div>
+</div>
