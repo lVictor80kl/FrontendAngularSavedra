@@ -4,9 +4,8 @@ import { LoginComponent } from './components/login/login.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { PersonalizacionFormComponent } from './components/personalizacion-form/personalizacion-form.component';
 import { authGuard } from './auth.guard';
-import { ImageListComponent } from './components/images/image-list/image-list.component';
-import { ImageDetailComponent } from './components/images/image-detail/image-detail.component';
-
+import { VideoUploadComponent } from './components/video-upload/video-upload.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 
 export const routes: Routes = [
     {path:'landing', component: LandingComponent},
@@ -14,6 +13,7 @@ export const routes: Routes = [
     {path:'form', component:FormularioComponent, canActivate: [authGuard]},
     {path: 'styles', component: PersonalizacionFormComponent, canActivate: [authGuard]},
     {path:'', redirectTo:'/landing', pathMatch: 'full' },
-    {path: 'images', component: ImageListComponent },
-    {path: 'images/detail/:id', component: ImageDetailComponent },
+    { path: 'videos/upload', component: VideoUploadComponent },
+    { path: 'videos', redirectTo: 'videos/upload', pathMatch: 'full' },
+    { path: 'image-upload', component: ImageUploadComponent },
 ];

@@ -1,0 +1,241 @@
+.image-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px; /* Aumentamos el padding interior */
+  border: 2px solid #b3b3b3; /* Borde más grueso y un color gris más intenso */
+  border-radius: 10px; /* Bordes ligeramente más redondeados */
+  margin: 20px auto; /* Añadimos margen automático para centrarlo y separarlo bien */
+  max-width: 90%; /* Limitamos el ancho máximo para que no ocupe todo el espacio horizontal */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  background-color: white; /* Fondo blanco sólido para mayor contraste */
+}
+
+h2 {
+  margin-bottom: 20px; /* Más espacio debajo del título */
+  color: #222; /* Color del título más oscuro */
+}
+
+.upload-section {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .file-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .upload-button {
+      background-color: #007bff;
+      color: white;
+      padding: 12px 18px; /* Botón de carga un poco más grande */
+      border: 1px solid #007bff; /* Añadimos un borde al botón */
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 8px;
+
+      &:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+    }
+
+    .formats-info {
+      font-size: 0.9em;
+      color: #555;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.error-message {
+  color: #d9534f; /* Color de error más llamativo */
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.cropper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 700px; /* Aumentamos el ancho máximo del cropper */
+
+  .cropper-wrapper {
+    width: 100%;
+    aspect-ratio: 4/3; /* Ajusta según tu necesidad */
+    overflow: hidden;
+    margin-bottom: 15px;
+    border: 1px solid #ccc; /* Borde del cropper más visible */
+  }
+
+  .cropper-tools {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+
+    .tool-button {
+      background-color: #5cb85c; /* Color verde más fuerte */
+      color: white;
+      border: 1px solid #5cb85c; /* Añadimos borde al botón de herramienta */
+      border-radius: 6px;
+      padding: 10px 15px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #4cae4c;
+        border-color: #4cae4c;
+      }
+
+      span {
+        margin-right: 8px;
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+
+      .action-button {
+        padding: 12px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.95em;
+
+        &.save-button {
+          background-color: #007bff;
+          color: white;
+          border: 1px solid #007bff;
+
+          &:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+          }
+
+          &:disabled {
+            background-color: #ccc;
+            border-color: #ccc;
+            color: #888;
+            cursor: not-allowed;
+          }
+        }
+
+        &.cancel-button {
+          background-color: #dc3545;
+          color: white;
+          border: 1px solid #dc3545;
+
+          &:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+          }
+        }
+      }
+    }
+  }
+}
+
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 25px;
+
+  h3 {
+    margin-bottom: 12px;
+    color: #333;
+  }
+
+  .preview-image {
+    max-width: 350px;
+    max-height: 350px;
+    overflow: hidden;
+    border: 1px solid #bbb;
+    margin-bottom: 18px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.saved-images-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+
+  h3 {
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .carousel {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Aumentamos el ancho máximo del carrusel */
+
+    .carousel-button {
+      background: none;
+      border: none;
+      font-size: 1.8em;
+      color: #777;
+      cursor: pointer;
+      padding: 12px;
+
+      &:disabled {
+        color: #ccc;
+        cursor: not-allowed;
+      }
+
+      &.prev {
+        margin-right: 15px;
+      }
+
+      &.next {
+        margin-left: 15px;
+      }
+    }
+
+    .carousel-images-container {
+      display: flex;
+      flex-grow: 1;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      border: 1px solid #eee;
+      border-radius: 6px;
+      padding: 12px;
+    }
+
+    .carousel-image {
+      flex: 0 0 auto;
+      width: calc(33.33% - 15px);
+      max-height: 250px;
+      margin-right: 15px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+    }
+  }
+}

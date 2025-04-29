@@ -1,0 +1,167 @@
+<div class="video-upload-container">
+    <h2>Subir Nuevo Video</h2>
+  
+    <form [formGroup]="videoForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+  
+      <div class="form-group">
+        <label for="title">Título del Video *</label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          class="form-control"
+          [class.is-invalid]="videoForm.get('title')?.invalid && videoForm.get('title')?.touched">
+        <div *ngIf="videoForm.get('title')?.invalid && videoForm.get('title')?.touched" class="invalid-feedback">
+          El título es obligatorio y debe tener al menos 3 caracteres.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Descripción *</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-control"
+          rows="3"
+          [class.is-invalid]="videoForm.get('description')?.invalid && videoForm.get('description')?.touched"></textarea>
+        <div *ngIf="videoForm.get('description')?.invalid && videoForm.get('description')?.touched" class="invalid-feedback">
+          La descripción es obligatoria.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="videoFile">Archivo de Video * (MP4, WebM - Máx. 50MB)</label>
+        <div class="custom-file-upload">
+          <input
+            type="file"
+            id="videoFile"
+            (change)="onVideoSelected($event)"
+            accept="video/mp4,video/webm"
+            class="form-control">
+          <div *ngIf="videoFile" class="selected-file">
+            {{ videoFile.name }} ({{ (videoFile.size / (1024 * 1024)).toFixed(2) }} MB)
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="videoPreviewUrl" class="video-preview">
+        <h4>Vista previa:</h4>
+        <div class="language-indicator">
+          Subtítulos actuales: {{ currentLanguage === 'es' ? 'Español' : 'English' }}
+        </div>
+  
+        <div class="video-container">
+          <video
+            #videoPlayer
+            controls
+            width="100%"
+            height="auto"
+            (play)="onVideoPlay()"
+            (pause)="onVideoPause()"
+            (ended)="onVideoEnded()"
+            (seeked)="updateActiveSubtitle(videoPlayer.currentTime)">
+            <source [src]="videoPreviewUrl" [type]="videoFile?.type">
+            Tu navegador no soporta la reproducción de videos.
+          </video>
+  
+          <div class="subtitle-overlay" *ngIf="currentlyDisplayedSubtitle">
+            {{ currentlyDisplayedSubtitle }}
+          </div>
+        </div>
+      </div>
+  
+      <div class="subtitles-section">
+        <h4>Subtítulos (Formato .vtt o .srt) *</h4>
+        <p class="subtitle-info">Cada archivo debe contener al menos 10 líneas de diálogo.</p>
+  
+        <div class="form-group">
+          <label for="subtitleEs">Subtítulos en Español *</label>
+          <div class="custom-file-upload">
+            <input
+              type="file"
+              id="subtitleEs"
+              (change)="onSubtitleSelected($event, 'es')"
+              accept=".vtt,.srt"
+              class="form-control">
+            <div *ngIf="subtitleFiles['es']" class="selected-file">
+              {{ subtitleFiles['es'].name }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="subtitleEn">Subtítulos en Inglés *</label>
+          <div class="custom-file-upload">
+            <input
+              type="file"
+              id="subtitleEn"
+              (change)="onSubtitleSelected($event, 'en')"
+              accept=".vtt,.srt"
+              class="form-control">
+            <div *ngIf="subtitleFiles['en']" class="selected-file">
+              {{ subtitleFiles['en'].name }}
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="subtitles-section">
+        <h4>Control de Subtítulos</h4>
+        <div class="language-buttons">
+          <button type="button" class="btn" [class.btn-primary]="currentLanguage === 'es'" [class.btn-outline-primary]="currentLanguage !== 'es'" (click)="changeLanguage('es')">
+            Mostrar Subtítulos en Español
+          </button>
+          <button type="button" class="btn" [class.btn-primary]="currentLanguage === 'en'" [class.btn-outline-primary]="currentLanguage !== 'en'" (click)="changeLanguage('en')">
+            Mostrar Subtítulos en Inglés
+          </button>
+        </div>
+  
+      </div>
+  
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="videoForm.invalid || isSubmitting || !videoFile || !subtitleFiles['es'] || !subtitleFiles['en']">
+          <span *ngIf="isSubmitting">Subiendo...</span>
+          <span *ngIf="!isSubmitting">Subir Video</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="resetForm()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  
+    <div *ngIf="playedVideos.length > 0" class="played-videos-carousel">
+      <h3>Videos Subidos</h3>
+      <div class="carousel">
+        <button class="carousel-button prev" (click)="prevVideo()" [disabled]="carouselIndex === 0">
+          &lt;
+        </button>
+        <div class="carousel-item">
+          <div *ngIf="currentPlayedVideo" class="video-info">
+            <div *ngIf="currentPlayedVideo.thumbnailUrl" class="thumbnail-placeholder">
+              <img [src]="currentPlayedVideo.thumbnailUrl" alt="Miniatura del video" class="carousel-thumbnail">
+            </div>
+            <h4>{{ currentPlayedVideo.title }}</h4>
+            <p>{{ currentPlayedVideo.description }}</p>
+            </div>
+          <div *ngIf="!currentPlayedVideo">
+            No hay videos subidos para mostrar.
+          </div>
+        </div>
+        <button class="carousel-button next" (click)="nextVideo()" [disabled]="carouselIndex === playedVideos.length - 1">
+          &gt;
+        </button>
+      </div>
+    </div>
+  </div>

@@ -4,16 +4,15 @@ import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../services/theme-service.service';
 import { TangramComponent } from '../tangram/tangram.component';
 import { LoadingService } from '../loading/loading.service';
-import { ImageListComponent } from '../images/image-list/image-list.component';
-import { ImageUploadComponent } from '../images/image-upload/image-upload.component';
-import { handleImageUpload } from '../../services/image.service';
+import { VideoUploadComponent } from '../video-upload/video-upload.component';
+import { ImageUploadComponent } from '../image-upload/image-upload.component';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterLink, TangramComponent, ImageListComponent, ImageUploadComponent],
+  imports: [CommonModule, RouterLink, TangramComponent, VideoUploadComponent, ImageUploadComponent],
   providers: [ThemeService]
 })
 export class LandingComponent implements OnInit {

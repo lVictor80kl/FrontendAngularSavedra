@@ -1,0 +1,92 @@
+<div class="image-upload-container">
+  <h2>Módulo de Imágenes</h2>
+
+  <div class="upload-section">
+    <div class="file-input-container">
+      <label for="fileInput" class="upload-button">
+        Seleccionar imagen
+      </label>
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/jpeg,image/jpg,image/png,image/webp"
+        (change)="handleFileChange($event)"
+        hidden
+      />
+      <p class="formats-info">Formatos admitidos: JPG, PNG, WebP</p>
+      <p class="formats-info">Dimensiones mínimas: {{ minWidth }}x{{ minHeight }}px</p>
+      <p class="formats-info">Tamaño máximo: {{ maxFileSize }}MB</p>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="cropper-container" *ngIf="showCropper">
+    <div class="cropper-wrapper">
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="false"
+        [aspectRatio]="4/3"
+        [resizeToWidth]="800"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+        [transform]="{scale: scale, rotate: rotation}"
+      ></image-cropper>
+    </div>
+
+    <div class="cropper-tools">
+      <button class="tool-button" (click)="zoomIn()">
+        <span>➕</span> Acercar
+      </button>
+      <button class="tool-button" (click)="zoomOut()">
+        <span>➖</span> Alejar
+      </button>
+      <button class="tool-button" (click)="rotateLeft()">
+        <span>↺</span> Rotar izquierda
+      </button>
+      <button class="tool-button" (click)="rotateRight()">
+        <span>↻</span> Rotar derecha
+      </button>
+      <button class="tool-button" (click)="resetImage()">
+        <span>⟲</span> Reiniciar
+      </button>
+      <div class="action-buttons">
+        <button class="action-button save-button" (click)="saveImage()" [disabled]="!!errorMessage">
+          Guardar imagen
+        </button>
+        <button class="action-button cancel-button" (click)="clearImage()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-container" *ngIf="croppedImage">
+    <h3>Vista Previa</h3>
+    <div class="preview-image">
+      <img [src]="croppedImage" alt="Vista previa">
+    </div>
+  </div>
+
+  <div class="saved-images-carousel" *ngIf="savedImages.length > 0">
+    <h3>Imágenes Guardadas</h3>
+    <div class="carousel">
+      <button class="carousel-button prev" (click)="prevImage()" [disabled]="!showPrevButton">
+        &lt;
+      </button>
+      <div class="carousel-images-container">
+        <div *ngFor="let savedImage of visibleSavedImages; let i = index" class="carousel-image">
+          <img [src]="savedImage" alt="Imagen guardada {{ carouselStartIndex + i + 1 }}">
+        </div>
+      </div>
+      <button class="carousel-button next" (click)="nextImage()" [disabled]="!showNextButton">
+        &gt;
+      </button>
+    </div>
+  </div>
+</div>
